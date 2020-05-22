@@ -1,0 +1,11 @@
+{
+  "name": "rettungsdienst",
+  "version": "1.0.0",
+  "description": "MS_Rettungsdienst_backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Patrick Poppe",
+  "license": "ISC"
+}
