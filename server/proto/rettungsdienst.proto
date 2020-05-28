@@ -1,8 +1,9 @@
 syntax = "proto3";
 
+package rtguide;
 /* service definitions */
 service RettungsdienstService {
-    rpc getMissionReport(MissionId) returns (Mission) {}
+    rpc getMissionReport(MissionID) returns (Mission) {}
     rpc registerTransport (Transport) returns (MissionID) {}
 }
 
