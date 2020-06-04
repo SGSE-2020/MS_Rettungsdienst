@@ -15,6 +15,7 @@ export default new Vuex.Store({
       sanitater: null,
       symptome: null,
       medikamente: null,
+      diagnose: null
     },
     aktPatient: {
       akteID: "Testakte",
@@ -26,6 +27,9 @@ export default new Vuex.Store({
       medikation: "nicht vorhanden",
       psychisch: "nein",
       sonstiges: "nicht vorhanden"
+    },
+    missions: {
+      all: []
     }
   },
   mutations: {
@@ -38,7 +42,8 @@ export default new Vuex.Store({
     setMisEnd: (state, payload) => {state.aktMission.einsatzende = payload},
     setSani: (state, payload) => {state.aktMission.sanitater = payload},
     setSymp: (state, payload) => {state.aktMission.symptome = payload},
-    setMedi: (state, payload) => {state.aktMission.medikamente = payload},  
+    setMedi: (state, payload) => {state.aktMission.medikamente = payload}, 
+    setDiag: (state, payload) => {state.aktMission.diagnose = payload}, 
     setAktMis: (state, payload) => {state.aktMission = payload}
   },
   actions: {
@@ -68,6 +73,9 @@ export default new Vuex.Store({
     },
     setMedikamente: (context, payload) => {
       context.commit('setMedi', payload)
+    },
+    setDiagnose: (context, payload) => {
+      context.commit('setDiag', payload)
     },
     setAktMiss: (context, payload) => {
       context.commit('setAktMis', payload)

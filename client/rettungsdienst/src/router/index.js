@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MissionOverview from '../views/Home.vue'
+import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'missionOverview',
-    component: MissionOverview
+    name: 'home',
+    component: Home
   },
   {
     path: '/about',
@@ -37,7 +37,12 @@ const routes = [
     path: '/showWay',
     name: 'showWay',
     component: () => import('../views/showWay.vue')
-  }
+  },
+  {
+    path: '/missionOverview',
+    name: 'missionOverview',
+    component: () => import('../views/MissionOverview.vue')
+  },
 
 ]
 

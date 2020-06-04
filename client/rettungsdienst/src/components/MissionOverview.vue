@@ -1,21 +1,15 @@
 <template>
-  <div class="MissionOverview">
-    <h1>Test</h1>
-    <button @click="setMisID({'value':'267'})"/>
-  </div>
+    <div class="MissionOverview">
+    </div>
 </template>
 
 <script>
-import {mapState} from "vuex"
-//import {mapActions} from "vuex"
-
+import { mapState } from "vuex";
 export default {
-  name: 'test',
-  computed: mapState(["aktMission"]),
+    name: "MissionOverview",
+  computed: mapState(["missions"]),
   methods: {
-    setMisID(payload){
-      this.$store.dispatch('setMissID', payload.value)
-    }
+    
   }
 }
 </script>
