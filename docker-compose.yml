@@ -1,17 +1,10 @@
-version: '3.4'
-
+version: '3'
 services:
-  server:
-    image: msrettungsdienst
-    build:
-      context: .
-      dockerfile: server/Dockerfile
+  frontend:
+    build: frontend/.
     ports:
-      - 50051
-  rettungsdienst:
-    image: client
-    build:
-      context: .
-      dockerfile: client/rettungsdienst/Dockerfile
-    ports: 
-      - 8080:80
+      - 80:80
+  backend:
+    build: backend/.
+    ports:
+      - 8080:8080
