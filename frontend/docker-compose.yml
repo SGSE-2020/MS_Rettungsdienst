@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  ms_rettungsdienst:
-    image: ms_rettungsdienst
+  frontend:
+    image: frontend
     build: .
     ports:
-      - 8080
+      - 80
