@@ -1,6 +1,6 @@
 <template>
   <div class="closeMission">
-    <button @click="closeMission(aktMission)">Einsatz beenden</button>
+    <button @click="closedMission(aktMission)">Einsatz beenden</button>
   </div>
 </template>
 
@@ -12,14 +12,9 @@ export default {
   name: "test",
   computed: mapState(["aktMission"]),
   methods: {
-    closeMission(mission) {
-      this.$socket.emit('createNewMis', mission)
-    },
-    closedMission(){
-      this.$options.sockets.mission_created = (data) => {
-        this.$store.dispatch('setAktMiss', data)
+    closedMission(payload){
+        this.$store.dispatch('emitCreateMission', payload)
       }
     }
-  }
 };
 </script>

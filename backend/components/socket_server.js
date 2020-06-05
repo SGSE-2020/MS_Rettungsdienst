@@ -11,9 +11,12 @@ http.listen(3000, () => {
 });
 
 io.on('connection', function (socket) {
-  socket.on('createNewMis', function (mission) {
+  console.log("connected");
+  socket.on('Create', function (mission) {
+    console.log("create");
+    console.log(mission)
     mission.einsatzID='123';
-    socket.emit('created');
-    socket.broadcast.emit('mission_created', mission);
+    socket.emit('New mission', mission);
+    console.log("Mission send")
   })
 })

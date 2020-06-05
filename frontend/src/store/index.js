@@ -34,7 +34,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    "<MUTATION_Prefix>CON": (state) => {state.isConnected= true},
+    NEW_Mission: (state, mission) => {state.aktMission= mission},
     increment: state => state.role++,
     decrement: state => state.role--,
     setMisID: ( state, payload) => { state.aktMission.einsatzID = payload},
@@ -82,6 +82,13 @@ export default new Vuex.Store({
     setAktMiss: (context, payload) => {
       context.commit('setAktMis', payload)
     },
+    socket_newMission (context, mission) {
+      context.commit('NEW_Mission', mission)
+    },
+    emitCreateMission(mission){
+      console.log(mission)
+      this._vm.$socket.client.emit('Create', mission);
+    }
   },
   modules: {
   }

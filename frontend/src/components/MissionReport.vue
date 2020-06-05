@@ -97,9 +97,6 @@ export default {
   name: "test",
   computed: mapState(["aktMission"]),
   methods: {
-    setMisID(payload) {
-      this.$store.dispatch("setMissID", payload.value);
-    },
   }
 };
 </script>
