@@ -1,0 +1,19 @@
+{
+  "name": "rettungsdienst",
+  "version": "1.0.0",
+  "description": "MS-Rettungsdienst_Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patrick Poppe",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.4",
+    "async": "^3.2.0",
+    "express": "^4.15.2",
+    "grpc": "^1.24.2",
+    "socket.io": "^2.3.0",
+    "uuid": "^8.1.0"
+  }
+}

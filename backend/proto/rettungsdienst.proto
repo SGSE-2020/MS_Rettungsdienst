@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package rtguide;
+/* service definitions */
+service RettungsdienstService {
+    rpc getMissionReport(MissionID) returns (Mission) {}
+    rpc registerTransport (Transport) returns (MissionID) {}
+}
+
+/* message definitions */
+message MissionID {
+    string missionID = 1;
+}
+
+message Transport {
+    string location = 1;
+    string patientenID = 2;
+}
+
+message Mission {
+    string missionID = 1;
+    string patientenID = 2;
+    string street = 3;
+    string zipCode = 4;
+    string city = 5;
+    Date missionBegin = 6;
+    Date missionEnd = 7;
+    string sanitaeter = 8;
+    string symptome = 9;
+    string medikamente = 10;
+}
+
+message Date {
+    int32 day = 1;
+    int32 month = 2;
+    int32 year = 3;
+    int32 hour = 4;
+    int32 minute=5;
+}

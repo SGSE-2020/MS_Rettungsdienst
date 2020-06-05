@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  ms_rettungsdienst:
+    image: ms_rettungsdienst
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080
