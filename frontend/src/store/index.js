@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    isConnected: false,
     role: 0,
     aktMission: {
       einsatzID: null,
@@ -33,6 +34,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    "<MUTATION_Prefix>CON": (state) => {state.isConnected= true},
     increment: state => state.role++,
     decrement: state => state.role--,
     setMisID: ( state, payload) => { state.aktMission.einsatzID = payload},

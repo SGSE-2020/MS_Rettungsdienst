@@ -2,7 +2,7 @@
   <div class="PatintInfo">
     <label>PatientenID</label>
     <input v-model="patID" placeholder="PatientenID" />
-    <button @click="getPatInfo" class="getPatInfo" />
+    <!-- <button @click="getPatInfo" class="getPatInfo" /> -->
     <table>
       <tr>
         <td>
