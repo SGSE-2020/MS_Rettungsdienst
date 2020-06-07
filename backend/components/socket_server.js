@@ -13,10 +13,17 @@ http.listen(3000, () => {
 io.on('connection', function (socket) {
   console.log("connected");
   socket.on('Create', function (mission) {
-    console.log("create");
-    console.log(mission)
-    mission.einsatzID='123';
-    socket.emit('New mission', mission);
-    console.log("Mission send")
+    mission.einsatzID = '12345';
+    var x = new Date();
+    var y = x.getFullYear().toString();
+    var m = (x.getMonth() + 1).toString();
+    var d = x.getDate().toString();
+    var h = x.getHours().toString();
+    var min = x.getMinutes().toString();
+    (d.length == 1) && (d = '0' + d);
+    (m.length == 1) && (m = '0' + m);
+    var yyyymmddhhmin = y + "/" + m + "/" + d + "/" + h + ":" + min;
+    mission.einsatzbegin = yyyymmddhhmin;
+    socket.broadcast.emit('New mission', mission);
   })
 })

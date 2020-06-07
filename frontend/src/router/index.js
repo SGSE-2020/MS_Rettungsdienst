@@ -43,6 +43,11 @@ const routes = [
     name: 'missionOverview',
     component: () => import('../views/MissionOverview.vue')
   },
+  {
+    path: '/createMission',
+    name: 'createMission',
+    component: () => import('../views/CreatesMission.vue')
+  },
 
 ]
 

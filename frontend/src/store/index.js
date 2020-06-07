@@ -31,28 +31,31 @@ export default new Vuex.Store({
     },
     missions: {
       all: []
+    },
+    paramedics: {
+      all: ['1234', '5678', '1212']
     }
   },
   mutations: {
-    NEW_Mission: (state, mission) => {state.aktMission= mission},
+    NEW_Mission: (state, mission) => { state.aktMission = mission },
     increment: state => state.role++,
     decrement: state => state.role--,
-    setMisID: ( state, payload) => { state.aktMission.einsatzID = payload},
-    setPatiID: (state, payload) => {state.aktMission.patientenID = payload},
-    setAdres: (state, payload) => {state.aktMission.adresse = payload},
-    setMisBeg: (state, payload) => {state.aktMission.einsatzbegin = payload},
-    setMisEnd: (state, payload) => {state.aktMission.einsatzende = payload},
-    setSani: (state, payload) => {state.aktMission.sanitater = payload},
-    setSymp: (state, payload) => {state.aktMission.symptome = payload},
-    setMedi: (state, payload) => {state.aktMission.medikamente = payload}, 
-    setDiag: (state, payload) => {state.aktMission.diagnose = payload}, 
-    setAktMis: (state, payload) => {state.aktMission = payload}
+    setMisID: (state, payload) => { state.aktMission.einsatzID = payload },
+    setPatiID: (state, payload) => { state.aktMission.patientenID = payload },
+    setAdres: (state, payload) => { state.aktMission.adresse = payload },
+    setMisBeg: (state, payload) => { state.aktMission.einsatzbegin = payload },
+    setMisEnd: (state, payload) => { state.aktMission.einsatzende = payload },
+    setSani: (state, payload) => { state.aktMission.sanitater = payload },
+    setSymp: (state, payload) => { state.aktMission.symptome = payload },
+    setMedi: (state, payload) => { state.aktMission.medikamente = payload },
+    setDiag: (state, payload) => { state.aktMission.diagnose = payload },
+    setAktMis: (state, payload) => { state.aktMission = payload }
   },
   actions: {
-    increment () {
+    increment() {
       this.commit('increment')
     },
-    decrement () {
+    decrement() {
       this.commit('decrement')
     },
     setMissID: (context, payload) => {
@@ -82,12 +85,12 @@ export default new Vuex.Store({
     setAktMiss: (context, payload) => {
       context.commit('setAktMis', payload)
     },
-    socket_newMission (context, mission) {
+    socket_newMission(context, mission) {
       context.commit('NEW_Mission', mission)
     },
-    emitCreateMission(mission){
-      console.log(mission)
-      this._vm.$socket.client.emit('Create', mission);
+    emitCreateMission(context, sanitater) {
+      context.commit('setSani', sanitater)
+      this._vm.$socket.client.emit('Create', context.state.aktMission);
     }
   },
   modules: {
