@@ -13,7 +13,7 @@ export default {
   computed: mapState(["aktMission"]),
   methods: {
     closedMission(payload){
-        this.$store.dispatch('emitCreateMission', payload)
+        this.$store.dispatch('emitEndMission', payload)
       }
     }
 };

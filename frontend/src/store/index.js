@@ -37,7 +37,6 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    NEW_Mission: (state, mission) => { state.aktMission = mission },
     increment: state => state.role++,
     decrement: state => state.role--,
     setMisID: (state, payload) => { state.aktMission.einsatzID = payload },
@@ -86,11 +85,17 @@ export default new Vuex.Store({
       context.commit('setAktMis', payload)
     },
     socket_newMission(context, mission) {
-      context.commit('NEW_Mission', mission)
+      context.commit('setAktMis', mission)
     },
     emitCreateMission(context, sanitater) {
       context.commit('setSani', sanitater)
       this._vm.$socket.client.emit('Create', context.state.aktMission);
+    },
+    socket_endMission(context){
+      this._vm.$socket.client.emit('End', context.state.aktMission);
+    },
+    emitEndMission(context, payload){
+      context.commit('setAktMis', payload)
     }
   },
   modules: {

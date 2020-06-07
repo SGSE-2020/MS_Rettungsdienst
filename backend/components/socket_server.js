@@ -25,5 +25,27 @@ io.on('connection', function (socket) {
     var yyyymmddhhmin = y + "/" + m + "/" + d + "/" + h + ":" + min;
     mission.einsatzbegin = yyyymmddhhmin;
     socket.broadcast.emit('New mission', mission);
+    mission.einsatzID= null;
+      mission.patientenID= null;
+      mission.adresse= null;
+      mission.einsatzbegin= null;
+      mission.einsatzende= null;
+      mission.sanitater= null;
+      mission.symptome= null;
+      mission.medikamente= null;
+      mission.diagnose= null;
+      socket.emit('New mission', mission);
+  });
+  socket.on('End', function(mission){
+      mission.einsatzID= null;
+      mission.patientenID= null;
+      mission.adresse= null;
+      mission.einsatzbegin= null;
+      mission.einsatzende= null;
+      mission.sanitater= null;
+      mission.symptome= null;
+      mission.medikamente= null;
+      mission.diagnose= null;
+      socket.emit('End mission', mission);
   })
 })
