@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user:{
+    aktUser:{
       uid: null,
       email: null,
-      password: null,
-      name:null
+      name:null,
+      role: 0,
     },
     aktMission: {
       _id: null,
@@ -50,7 +50,11 @@ export default new Vuex.Store({
     setSymp: (state, payload) => { state.aktMission.symptome = payload },
     setMedi: (state, payload) => { state.aktMission.medikamente = payload },
     setDiag: (state, payload) => { state.aktMission.diagnose = payload },
-    setAktMis: (state, payload) => { state.aktMission = payload }
+    setAktMis: (state, payload) => { state.aktMission = payload },
+    setUid:(state, payload) => { state.aktUser.uid = payload },
+    setUmail:(state, payload) => { state.aktUser.email = payload },
+    setUname:(state, payload) => { state.aktUser.name = payload },
+    setUrole:(state, payload) => { state.aktUser.role = payload },
   },
   actions: {
     setMissID: (context, payload) => {
@@ -79,6 +83,18 @@ export default new Vuex.Store({
     },
     setAktMiss: (context, payload) => {
       context.commit('setAktMis', payload)
+    },
+    setUserId: (context, payload) => {
+      context.commit('setUid', payload)
+    },
+    setUserMail: (context, payload) => {
+      context.commit('setUmail', payload)
+    },
+    setUserName: (context, payload) => {
+      context.commit('setUname', payload)
+    },
+    setUserRole: (context, payload) => {
+      context.commit('setUrole', payload)
     },
     socket_newMission(context, mission) {
       context.commit('setAktMis', mission)

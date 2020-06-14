@@ -1,16 +1,16 @@
 <template>
     <div class="navigation">
         <div type="button" class="missionReportNav">
-            <button id="misRepNav" @click="$router.push('missionReport')" class="NavBut" v-if="role==0">
+            <button id="misRepNav" @click="$router.push('missionReport')" class="NavBut" v-if="user.role==0">
               <img src="../assets/missionReportLogo.png">
             </button>
-            <button id="misRepNav" @click="$router.push('registerHospital')" class="NavBut" v-if="role==0">
+            <button id="misRepNav" @click="$router.push('registerHospital')" class="NavBut" v-if="user.role==0">
               <img src="../assets/hospitalLogo.jpg">
             </button>
-            <button id="misRepNav" @click="$router.push('showWay')" class="NavBut" v-if="role==0">
+            <button id="misRepNav" @click="$router.push('showWay')" class="NavBut" v-if="user.role==0">
               <img src="../assets/wayLogo.png">
             </button>
-            <button id="patInfoNav" @click="$router.push('patientInfos')" class="NavBut" v-if="role==0">
+            <button id="patInfoNav" @click="$router.push('patientInfos')" class="NavBut" v-if="user.role==0">
               <img src="../assets/patientinfosLogo.png">
             </button>
             <button id="misRepNav" @click="$router.push('missionOverview')" class="NavBut" >
@@ -28,7 +28,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "test",
-  computed: mapState(["role"]),
+  computed: mapState(["user"]),
 };
 </script>
 
