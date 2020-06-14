@@ -8,7 +8,7 @@
           <label>EinsatzID:</label>
         </td>
         <td>
-          <label>{{aktMission.einsatzID}}</label>
+          <label>{{aktMission._id}}</label>
         </td>
         <td></td>
       </tr>

@@ -5,10 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isConnected: false,
-    role: 0,
+    user:{
+      uid: null,
+      email: null,
+      password: null,
+      name:null
+    },
     aktMission: {
-      einsatzID: null,
+      _id: null,
       patientenID: null,
       adresse: null,
       einsatzbegin: null,
@@ -37,7 +41,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setMisID: (state, payload) => { state.aktMission.einsatzID = payload },
+    setMisID: (state, payload) => { state.aktMission._id = payload },
     setPatiID: (state, payload) => { state.aktMission.patientenID = payload },
     setAdres: (state, payload) => { state.aktMission.adresse = payload },
     setMisBeg: (state, payload) => { state.aktMission.einsatzbegin = payload },
@@ -83,11 +87,11 @@ export default new Vuex.Store({
       context.commit('setSani', sanitater)
       this._vm.$socket.client.emit('Create', context.state.aktMission);
     },
-    socket_endMission(context) {
-      this._vm.$socket.client.emit('End', context.state.aktMission);
-    },
-    emitEndMission(context, payload) {
+    socket_endMission(context, payload) {
       context.commit('setAktMis', payload)
+    },
+    emitEndMission(context) {
+      this._vm.$socket.client.emit('End', context.state.aktMission);
     }
   },
   modules: {
@@ -95,5 +99,5 @@ export default new Vuex.Store({
 })
 
 export const mutations = {
-  setMisID: (state, payload) => { state.aktMission.einsatzID = payload },
+  setMisID: (state, payload) => { state.aktMission._id = payload },
 }
