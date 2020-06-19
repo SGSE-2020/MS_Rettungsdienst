@@ -9,7 +9,7 @@ var protoLoader = require('@grpc/proto-loader');
 
 var PROTO_PATH_BURGERBURO = __dirname + '/../proto/user.proto';
 
-const url = 'mongodb://localhost:27017';
+const url = 'mongodb://mongo:mongo@0.0.0.0:27017';
 
 const dbName = 'local';
 
@@ -26,8 +26,11 @@ var routeguide = grpc.loadPackageDefinition(packageDefinition).user;
 var clientBurgerburo = new routeguide.UserService('ms-buergerbuero:50051',
   grpc.credentials.createInsecure());
 
-MongoClient.connect(url, function (err, client) {
-  assert.equal(null, err);
+MongoClient.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(client=> {
   console.log("Connected succesfully to db");
 
   const db = client.db(dbName);
@@ -112,4 +115,5 @@ MongoClient.connect(url, function (err, client) {
       });
     })
   });
-});
+})
+.catch(console.error)
