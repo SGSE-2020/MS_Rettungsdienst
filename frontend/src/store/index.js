@@ -97,7 +97,9 @@ export default new Vuex.Store({
       context.commit('setUrole', payload)
     },
     socket_newMission(context, mission) {
-      context.commit('setAktMis', mission)
+      if (context.state.aktUser.uid == mission.sanitater){
+        context.commit('setAktMis', mission)
+      }
     },
     emitCreateMission(context, sanitater) {
       context.commit('setSani', sanitater)
@@ -108,6 +110,14 @@ export default new Vuex.Store({
     },
     emitEndMission(context) {
       this._vm.$socket.client.emit('End', context.state.aktMission);
+    },
+    emitLogin(context, idtoken){
+      console.log(idtoken)
+      this._vm.$socket.client.emit('Login', idtoken);
+    },
+    socket_completeLogin: (conext, role, token) => {
+      console.log(role);
+      console.log(token);
     }
   },
   modules: {

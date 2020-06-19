@@ -4,12 +4,27 @@ var io = require('socket.io')(http)
 const MongoClient = require('mongodb').MongoClient
 const assert = require('assert')
 var ObjectID = require('mongodb').ObjectID;
+var grpc = require('grpc');
+var protoLoader = require('@grpc/proto-loader');
 
-
+var PROTO_PATH_BURGERBURO = __dirname + '/../proto/user.proto';
 
 const url = 'mongodb://localhost:27017';
 
 const dbName = 'local';
+
+var packageDefinition = protoLoader.loadSync(
+  PROTO_PATH_BURGERBURO,
+  {
+    keepCase: true,
+    longs: String,
+    enums: String,
+    defaults: true,
+    oneofs: true
+  });
+var routeguide = grpc.loadPackageDefinition(packageDefinition).user;
+var clientBurgerburo = new routeguide.UserService('ms-buergerbuero:50051',
+  grpc.credentials.createInsecure());
 
 MongoClient.connect(url, function (err, client) {
   assert.equal(null, err);
@@ -31,7 +46,7 @@ MongoClient.connect(url, function (err, client) {
   const endMissionDB = function (mission) {
     const collection = db.collection('missionReports');
     console.log(mission);
-    collection.updateOne({_id: new ObjectID(mission._id)},{$set: {medikamente: mission.medikamente, symptome: mission.symptome,diagnose: mission.diagnose, einsatzende:mission.einsatzende}}, function (err, result) {
+    collection.updateOne({ _id: new ObjectID(mission._id) }, { $set: { medikamente: mission.medikamente, symptome: mission.symptome, diagnose: mission.diagnose, einsatzende: mission.einsatzende } }, function (err, result) {
       assert.equal(err, null);
     });
   }
@@ -84,6 +99,17 @@ MongoClient.connect(url, function (err, client) {
       mission.medikamente = null;
       mission.diagnose = null;
       socket.emit('End mission', mission);
+    });
+    socket.on('Login', idtoken => {
+      console.log(idtoken)
+      clientBurgerburo.verifyUser(idtoken, function (err, feature) {
+        if (err) {
+          console.log("error");
+        }
+        else {
+          socket.emit('CompleteLogin', 1, feature.uid)
+        }
+      });
     })
-  })
+  });
 });

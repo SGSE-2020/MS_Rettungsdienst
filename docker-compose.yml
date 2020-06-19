@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   frontend:
     build: frontend/.
@@ -9,3 +9,10 @@ services:
     ports:
       - 8080:8080
       - 3000:3000
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo

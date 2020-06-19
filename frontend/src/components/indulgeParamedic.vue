@@ -18,7 +18,6 @@ export default {
   computed: mapState(["paramedics", "aktMission"]),
   methods: {
       createMission(sanitater){
-        console.log(sanitater)
         this.$store.dispatch('emitCreateMission', sanitater)
       }
   }
