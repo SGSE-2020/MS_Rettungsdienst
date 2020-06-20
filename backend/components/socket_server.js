@@ -112,7 +112,7 @@ MongoClient.connect(url, {
         }
         else {
           console.log('clompeted')
-          socket.emit('CompleteLogin', 1, feature.uid)
+          socket.emit('CompleteLogin', 1, feature)
         }
       });
     })
