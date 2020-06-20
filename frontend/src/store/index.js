@@ -115,7 +115,7 @@ export default new Vuex.Store({
       console.log(idtoken)
       this._vm.$socket.client.emit('Login', idtoken);
     },
-    socket_completeLogin: (conext, role, token) => {
+    socket_completeLogin: (context, role, token) => {
       console.log(role);
       console.log(token);
     }

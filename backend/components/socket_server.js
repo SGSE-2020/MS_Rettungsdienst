@@ -108,8 +108,10 @@ MongoClient.connect(url, {
       clientBurgerburo.verifyUser(idtoken, function (err, feature) {
         if (err) {
           console.log("error");
+          socket.emit('CompleteLogin', 1, err)
         }
         else {
+          console.log('clompeted')
           socket.emit('CompleteLogin', 1, feature.uid)
         }
       });
