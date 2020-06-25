@@ -1,16 +1,16 @@
 version: "3"
 services:
-  # frontend:
-  #   build: frontend/.
-  #   ports:
-  #     - 80:80
-  # backend:
-  #   build: backend/.
-  #   ports:
-  #     - 8080:8080
-  #     - 3000:3000
-  #   depends_on:
-  #     - mongo
+  frontend:
+    build: frontend/.
+    ports:
+      - 80:80
+  backend:
+    build: backend/.
+    ports:
+      - 8080:8080
+      - 3000:3000
+    depends_on:
+      - mongo
   mongo:
     image: mongo
     environment: 
