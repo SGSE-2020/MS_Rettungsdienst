@@ -104,7 +104,6 @@ MongoClient.connect(url, {
       socket.emit('End mission', mission);
     });
     socket.on('Login', idtoken => {
-      console.log(idtoken)
       clientBurgerburo.verifyUser(idtoken, function (err, feature) {
         if (err) {
           console.log("error");

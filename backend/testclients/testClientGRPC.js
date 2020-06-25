@@ -12,8 +12,10 @@ var packageDefinition = protoLoader.loadSync(
      oneofs: true
     });
 var routeguide = grpc.loadPackageDefinition(packageDefinition).rtguide;
+console.log(routeguide)
 var client = new routeguide.RettungsdienstService('localhost:50051',
                                        grpc.credentials.createInsecure());
+console.log(client )
 
 
 reqMis = {
@@ -25,6 +27,7 @@ client.getMissionReport(reqMis, function(err, feature){
     }
     else {
         console.log("MissionID: " + feature.missionID);
+        console.log("PatientenID: "+ feature.patientenID);
     }
 });
 
