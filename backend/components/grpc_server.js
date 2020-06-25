@@ -59,6 +59,6 @@ function getServer() {
 }
 
 var grpcServer = getServer();
-grpcServer.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
+grpcServer.bind('127.0.0.1:50051', grpc.ServerCredentials.createInsecure());
 grpcServer.start();
 console.log("GRPC-Server is running");
