@@ -1,8 +1,9 @@
 const { MongoClient } = require('mongodb');
 const assert = require('assert')
+const path = require('path');
 const ObjectID = require('mongodb').ObjectID;
-var grpc = require('grpc');
-var protoLoader = require('@grpc/proto-loader');
+const grpc_module = require('grpc')
+const protoLoader = require('@grpc/proto-loader')
 
 var io = require('socket.io').listen(3000).sockets;
 
