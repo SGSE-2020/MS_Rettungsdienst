@@ -6,20 +6,22 @@ var protoLoader = require('@grpc/proto-loader');
 
 var io = require('socket.io').listen(3000).sockets;
 
-var url = "mongodb://localhost:27017"
-var PROTO_PATH_BURGERBURO = __dirname + '/../proto/user.proto';
-var packageDefinition = protoLoader.loadSync(
-    PROTO_PATH_BURGERBURO,
+var url = "mongodb://mongo:27017"
+// grpc
+
+const USER_PROTO = path.resolve(__dirname, './../proto/user.proto')
+const PACKAGE_DEFINITION = protoLoader.loadSync(
+    USER_PROTO,
     {
         keepCase: true,
         longs: String,
         enums: String,
         defaults: true,
         oneofs: true
-    });
-var routeguide = grpc.loadPackageDefinition(packageDefinition).user;
-var clientBurgerburo = new routeguide.UserService('ms-buergerbuero:50051',
-    grpc.credentials.createInsecure());
+    }
+)
+const PCKG_DEF_OBJ = grpc_module.loadPackageDefinition(PACKAGE_DEFINITION)
+const user_route = PCKG_DEF_OBJ.user
 
 
 MongoClient.connect(url, function (err, db) {
@@ -87,7 +89,8 @@ MongoClient.connect(url, function (err, db) {
             });
         });
         socket.on('Login', idtoken => {
-            clientBurgerburo.verifyUser(idtoken, function (err, feature) {
+            conn = new user_route.UserService('ms-buergerbuero:50051', grpc_module.credentials.createInsecure())
+            conn.verifyUser(idtoken, function (err, feature) {
                 if (err) {
                     console.log("error");
                     socket.emit('CompleteLogin', 1, err)
