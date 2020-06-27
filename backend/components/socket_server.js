@@ -5,9 +5,10 @@ const ObjectID = require('mongodb').ObjectID;
 var io = require('socket.io').listen(3000).sockets;
 var mongo = require('mongodb').MongoClient;
 
-var url = "mongodb://localhost:27017/ms_rettungdienst"
+var url = "mongodb://localhost:27017"
 
 MongoClient.connect(url, function (err, db) {
+    console.log(db);
     io.on('connection', (socket) => {
         console.log('connected');
         socket.on('Create', function (mission) {
@@ -71,7 +72,7 @@ MongoClient.connect(url, function (err, db) {
             });
         });
     });
-    var dbo = db;
+    var dbo = db.db("ms_rettungsdienst");
     // var myobj = { name: "Company Inc", address: "Highway 37" };
     // dbo.collection("missionReports").insertOne(myobj, function (err, res) {
     //     if (err) throw err;
