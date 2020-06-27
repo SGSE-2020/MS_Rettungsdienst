@@ -5,25 +5,15 @@ const ObjectID = require('mongodb').ObjectID;
 const grpc_module = require('grpc')
 const protoLoader = require('@grpc/proto-loader')
 var mongo = require('mongodb').MongoClient;
+const caller = require('grpc-caller')
 
 var io = require('socket.io').listen(3000).sockets;
 
 var url = "mongodb://localhost:27017"
 // grpc
 
-const USER_PROTO = path.resolve(__dirname, './../proto/user.proto')
-const PACKAGE_DEFINITION = protoLoader.loadSync(
-    USER_PROTO,
-    {
-        keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true
-    }
-)
-const PCKG_DEF_OBJ = grpc_module.loadPackageDefinition(PACKAGE_DEFINITION)
-const user_route = PCKG_DEF_OBJ.user
+const userProtoPath = path.resolve(__dirname, '../proto/user.proto');
+const grpcClient = caller('ms-buergerbuero:50051', userProtoPath, 'UserService');
 
 
 MongoClient.connect(url, function (err, db) {
@@ -91,16 +81,17 @@ MongoClient.connect(url, function (err, db) {
             });
         });
         socket.on('Login', idtoken => {
-            conn = new user_route.UserService('ms-buergerbuero:50051', grpc_module.credentials.createInsecure())
-            conn.verifyUser(idtoken, function (err, feature) {
-                if (err) {
-                    console.log("error");
-                    socket.emit('CompleteLogin', 1, err)
+            grpcClient.verifyUser({
+                token: idtoken
+            })
+            .then (result => {
+                if(result.uid){
+                    socket.emit('CompleteLogin',1, result.uid)
                 }
                 else {
-                    console.log('clompeted')
-                    socket.emit('CompleteLogin', 1, feature)
+                    socket.emit('CompleteLogin',1, result)
                 }
+            })
             });
         });
     });
