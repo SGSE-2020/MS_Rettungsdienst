@@ -6,7 +6,7 @@ var protoLoader = require('@grpc/proto-loader');
 
 var io = require('socket.io').listen(3000).sockets;
 
-var url = "mongodb://mongo:27017"
+var url = "mongodb://localhost:27017"
 // grpc
 
 const USER_PROTO = path.resolve(__dirname, './../proto/user.proto')
