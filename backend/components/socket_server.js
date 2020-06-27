@@ -92,6 +92,9 @@ MongoClient.connect(url, function (err, db) {
                         socket.emit('CompleteLogin', 1, result)
                     }
                 })
+                .catch (err => {
+                    socket.emit('CompleteLogin', 1, err)
+                })
 
 
         });
