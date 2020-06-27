@@ -3,17 +3,17 @@ services:
     frontend:
         build: ./frontend
         ports:
-            - 127.0.0.1:80:80
+            - 80:80
     backend:
         build: ./backend
         restart: always
         ports:
-            - 127.0.0.1:8080:8080
-            - 127.0.0.1:3000:3000
-            - 127.0.0.1:50051:50051
+            - 8080:8080
+            - 3000:3000
+            - 50051:50051
         depends_on:
             - mongo
     mongo:
       image: mongo
       ports:
-          -  127.0.0.1:27017:27017
+          -  27017:27017

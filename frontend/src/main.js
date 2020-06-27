@@ -8,7 +8,7 @@ import io from 'socket.io-client';
 import firebase from 'firebase'
 
 Vue.config.productionTip = false
-const socket = io('http://localhost:3000');
+const socket = io('/api:3000');
 
 var config = {
   apiKey: "AIzaSyBvTg0_QrhEvQ9UeZPH8--E2JZ55KA_u_c",
