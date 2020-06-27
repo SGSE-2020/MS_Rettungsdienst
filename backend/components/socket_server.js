@@ -7,7 +7,7 @@ const protoLoader = require('@grpc/proto-loader')
 var mongo = require('mongodb').MongoClient;
 const caller = require('grpc-caller')
 
-var io = require('socket.io').listen(3000).sockets;
+var io = require('socket.io').listen(8080).sockets;
 
 var url = "mongodb://localhost:27017"
 // grpc
