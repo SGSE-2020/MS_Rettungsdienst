@@ -84,15 +84,16 @@ MongoClient.connect(url, function (err, db) {
             grpcClient.verifyUser({
                 token: idtoken
             })
-            .then (result => {
-                if(result.uid){
-                    socket.emit('CompleteLogin',1, result.uid)
-                }
-                else {
-                    socket.emit('CompleteLogin',1, result)
-                }
-            })
-            });
+                .then(result => {
+                    if (result.uid) {
+                        socket.emit('CompleteLogin', 1, result.uid)
+                    }
+                    else {
+                        socket.emit('CompleteLogin', 1, result)
+                    }
+                })
+
+
         });
     });
     var dbo = db.db("ms_rettungsdienst");
