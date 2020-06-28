@@ -8,8 +8,7 @@ services:
         build: ./backend
         restart: always
         ports:
-            - 8080:8080
-            - 3000:3000
+            - 8080:8080lo
             - 50051:50051
         depends_on:
             - mongo
