@@ -17,7 +17,7 @@ const grpcClient = caller('ms-buergerbuero:50051', userProtoPath, 'UserService')
 
 
 MongoClient.connect(url, function (err, db) {
-    console.log(db);
+    console.log("socket server is running");
     io.on('connection', (socket) => {
         console.log('connected');
         socket.on('Create', function (mission) {
