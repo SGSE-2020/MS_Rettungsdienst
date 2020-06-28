@@ -6,8 +6,10 @@ const grpc_module = require('grpc')
 const protoLoader = require('@grpc/proto-loader')
 var mongo = require('mongodb').MongoClient;
 const caller = require('grpc-caller')
+const https = require('https').createServer();
 
-var io = require('socket.io').listen(8080).sockets;
+var io = require('socket.io')(https, {path: '/api/socket.io'});
+io.listen(8080).sockets;
 
 var url = "mongodb://localhost:27017"
 // grpc
