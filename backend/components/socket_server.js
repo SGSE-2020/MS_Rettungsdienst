@@ -140,7 +140,7 @@ MongoClient.connect(url, function (err, db) {
                 userid: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
                 station: 'Notaufnahme',
                 faculty: '',
-                symptoms: mission.symptome,
+                symtomps: mission.symptome,
                 diagnosis: mission.diagnose,
                 medication: mission.medikamente
             }
