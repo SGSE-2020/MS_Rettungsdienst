@@ -55,10 +55,10 @@ publishToExchange = (routingKey, data, socket) => {
     if (publishExchange != null) {
         socket.emit('writeConsole', "AMQP - Start publishing");
         publishExchange.publish(routingKey, Buffer.from(JSON.stringify(data)), {
-            appId: 'Rettungsdienst',
+            appId: 'rettungsdienst',
             timestamp: new Date().getTime(),
             contentType: 'application/json',
-            type: routingKey
+            type: 'person.verstorben'
         }, () => {
             console.log("AMQP - Published message: " + JSON.stringify(data));
         });
