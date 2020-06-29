@@ -22,59 +22,59 @@ const grpcClient2 = caller('ms-krankenhaus:50051', patientProtoPath, 'Hospital')
 
 let publishExchange = null;
 
-// initializePublisher = () => {
-//     const connection = amqp.createConnection({
-//         host: 'ms-rabbitmq',
-//         port: 5672,
-//         login: 'testmanager',
-//         password: 'sgseistgeil',
-//         vhost: '/'
-//     });
+initializePublisher = () => {
+    const connection = amqp.createConnection({
+        host: 'ms-rabbitmq',
+        port: 5672,
+        login: 'testmanager',
+        password: 'sgseistgeil',
+        vhost: '/'
+    });
 
-//     connection.on('ready', () => {
-//         console.log("AMQP connection established.");
-//         publishExchange = connection.exchange(process.env.MESSAGE_EXCHANGE, {
-//             type: process.env.MESSAGE_EXCHANGE_TYPE,
-//             durable: true,
-//             autoDelete: false
-//         }, (exchangeRes) => {
-//             console.log("AMQP exchange '" + exchangeRes.name + "' established.");
-//         });
+    connection.on('ready', () => {
+        console.log("AMQP connection established.");
+        publishExchange = connection.exchange(process.env.MESSAGE_EXCHANGE, {
+            type: process.env.MESSAGE_EXCHANGE_TYPE,
+            durable: true,
+            autoDelete: false
+        }, (exchangeRes) => {
+            console.log("AMQP exchange '" + exchangeRes.name + "' established.");
+        });
 
-//         publishExchange.on('error', error => {
-//             console.error("AMQP Exchange error: " + error.message);
-//         });
-//     });
+        publishExchange.on('error', error => {
+            console.error("AMQP Exchange error: " + error.message);
+        });
+    });
 
-//     connection.on('error', error => {
-//         console.log( "AMQP Connection error: " + error.message);
-//     })
-// };
+    connection.on('error', error => {
+        console.log( "AMQP Connection error: " + error.message);
+    })
+};
 
-// publishToExchange = (routingKey, data, socket) => {
-//     if (publishExchange != null) {
-//         socket.emit('writeConsole', "AMQP - Start publishing");
-//         publishExchange.publish(routingKey, Buffer.from(JSON.stringify(data)), {
-//             appId: 'Rettungsdienst',
-//             timestamp: new Date().getTime(),
-//             contentType: 'application/json',
-//             type: routingKey
-//         }, () => {
-//             console.log("AMQP - Published message: " + JSON.stringify(data));
-//         });
+publishToExchange = (routingKey, data, socket) => {
+    if (publishExchange != null) {
+        socket.emit('writeConsole', "AMQP - Start publishing");
+        publishExchange.publish(routingKey, Buffer.from(JSON.stringify(data)), {
+            appId: 'Rettungsdienst',
+            timestamp: new Date().getTime(),
+            contentType: 'application/json',
+            type: routingKey
+        }, () => {
+            console.log("AMQP - Published message: " + JSON.stringify(data));
+        });
 
-//         publishExchange.on('error', error => {
-//             socket.emit('writeConsole', "AMQP Exchange error: " + error.message);
-//         });
-//     } else {
-//         socket.emit('writeConsole', "AMQP - Can not publish");
-//     }
-// };
+        publishExchange.on('error', error => {
+            socket.emit('writeConsole', "AMQP Exchange error: " + error.message);
+        });
+    } else {
+        socket.emit('writeConsole', "AMQP - Can not publish");
+    }
+};
 
 MongoClient.connect(url, function (err, db) {
     io.on('connection', (socket) => {
         socket.emit('writeConsole', 'connected');
-        //initializePublisher();
+        initializePublisher();
         socket.on('Create', function (mission) {
             var x = new Date();
             var y = x.getFullYear().toString();
@@ -177,14 +177,14 @@ MongoClient.connect(url, function (err, db) {
                     socket.emit('writeConsole', err)
                 })
         })
-        // socket.on('deadPatient', mission => {
-        //     socket.emit('writeConsole', "Deadpatient wird ausgeführt");
-        //     data = {
-        //         patientID: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
-        //         Ort: mission.adresse
-        //     }
-        //     publishToExchange('person.verstorben', data, socket)
-        // })
+        socket.on('deadPatient', mission => {
+            socket.emit('writeConsole', "Deadpatient wird ausgeführt");
+            data = {
+                patientID: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
+                Ort: mission.adresse
+            }
+            publishToExchange('person.verstorben', data, socket)
+        })
     });
     var dbo = db.db("ms_rettungsdienst");
     const endMissionDB = function (mission) {

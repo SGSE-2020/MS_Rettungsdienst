@@ -12,7 +12,7 @@ export default {
   name: "test",
   computed: mapState(["aktMission"]),
   methods: {
-    register(payload){
+    dead(payload){
         this.$socket.client.emit('deadPatient', payload)
       }
     },
