@@ -20,7 +20,7 @@ const grpcClient = caller('ms-buergerbuero:50051', userProtoPath, 'UserService')
 const patientProtoPath = path.resolve(__dirname, '../proto/patient.proto');
 const grpcClient2 = caller('ms-krankenhaus:50051', patientProtoPath, 'Hospital');
 
-//let publishExchange = null;
+let publishExchange = null;
 
 // initializePublisher = () => {
 //     const connection = amqp.createConnection({
@@ -47,15 +47,15 @@ const grpcClient2 = caller('ms-krankenhaus:50051', patientProtoPath, 'Hospital')
 //     });
 
 //     connection.on('error', error => {
-//         socket.emit('writeConsole',"AMQP Connection error: " + error.message);
+//         console.log( "AMQP Connection error: " + error.message);
 //     })
 // };
 
-// exports.publishToExchange = (routingKey, data, socket) => {
-//     if(publishExchange != null){
-//         socket.emit('writeConsole',"AMQP - Start publishing");
+// publishToExchange = (routingKey, data, socket) => {
+//     if (publishExchange != null) {
+//         socket.emit('writeConsole', "AMQP - Start publishing");
 //         publishExchange.publish(routingKey, Buffer.from(JSON.stringify(data)), {
-//             appId: 'Bürgerbüro',
+//             appId: 'Rettungsdienst',
 //             timestamp: new Date().getTime(),
 //             contentType: 'application/json',
 //             type: routingKey
@@ -64,7 +64,7 @@ const grpcClient2 = caller('ms-krankenhaus:50051', patientProtoPath, 'Hospital')
 //         });
 
 //         publishExchange.on('error', error => {
-//             socket.emit('writeConsole',"AMQP Exchange error: " + error.message);
+//             socket.emit('writeConsole', "AMQP Exchange error: " + error.message);
 //         });
 //     } else {
 //         socket.emit('writeConsole', "AMQP - Can not publish");
@@ -72,9 +72,8 @@ const grpcClient2 = caller('ms-krankenhaus:50051', patientProtoPath, 'Hospital')
 // };
 
 MongoClient.connect(url, function (err, db) {
-    //socket.emit('writeConsole',"socket server is running");
     io.on('connection', (socket) => {
-        socket.emit('writeConsole','connected');
+        socket.emit('writeConsole', 'connected');
         //initializePublisher();
         socket.on('Create', function (mission) {
             var x = new Date();
@@ -91,7 +90,7 @@ MongoClient.connect(url, function (err, db) {
             dbo.collection("missionReports").findOne({ einsatzbegin: mission.einsatzbegin }, function (err, result) {
                 if (err) throw err;
                 mission = result;
-                socket.emit('writeConsole',result);
+                socket.emit('writeConsole', result);
             })
             socket.broadcast.emit('New mission', mission);
             mission._id = null;
@@ -129,10 +128,10 @@ MongoClient.connect(url, function (err, db) {
             socket.emit('End mission', mission);
         });
         socket.on('GetAll', function () {
-            socket.emit('writeConsole',"getAll")
+            socket.emit('writeConsole', "getAll")
             dbo.collection("missionReports").find({}).toArray(function (err, result) {
                 if (err) throw err;
-                socket.emit('writeConsole',result)
+                socket.emit('writeConsole', result)
                 socket.emit('getAll', result)
             });
         });
@@ -152,6 +151,7 @@ MongoClient.connect(url, function (err, db) {
                     socket.emit('writeConsole', err)
                 })
         });
+
         socket.on('registerHospital', mission => {
             var notfallPatient = {
                 userid: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
@@ -161,7 +161,6 @@ MongoClient.connect(url, function (err, db) {
                 diagnosis: mission.diagnose,
                 medication: mission.medikamente
             }
-            socket.emit('registeredHospital', notfallPatient);
             socket.emit('writeConsole', notfallPatient);
             grpcClient2.addPatient({
                 Patient: notfallPatient
@@ -173,6 +172,14 @@ MongoClient.connect(url, function (err, db) {
                     socket.emit('writeConsole', err)
                 })
         })
+            // socket.on('deadPatient', mission => {
+            //     socket.emit('writeConsole', "Deadpatient wird ausgeführt");
+            //     data = {
+            //         patientID: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
+            //         Ort: mission.adresse
+            //     }
+            //     publishToExchange('person.verstorben', data, socket)
+            // })
     });
     var dbo = db.db("ms_rettungsdienst");
     const endMissionDB = function (mission) {

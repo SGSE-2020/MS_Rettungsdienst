@@ -1,0 +1,20 @@
+<template>
+  <div class="deadPerson">
+    <button @click="dead(aktMission)">Person für tot erklären</button>
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+
+
+export default {
+  name: "test",
+  computed: mapState(["aktMission"]),
+  methods: {
+    register(payload){
+        this.$socket.client.emit('deadPatient', payload)
+      }
+    },
+};
+</script>

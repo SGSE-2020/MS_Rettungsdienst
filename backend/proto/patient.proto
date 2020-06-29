@@ -16,5 +16,5 @@ message Patient {
 }
 
 message addPatientPeply {
-  bool success = 1;
+  string success = 1;
 }
