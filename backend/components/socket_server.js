@@ -17,45 +17,45 @@ var url = "mongodb://localhost:27017"
 const userProtoPath = path.resolve(__dirname, '../proto/user.proto');
 const grpcClient = caller('ms-buergerbuero:50051', userProtoPath, 'UserService');
 
-var connection = amqp.createConnection({ host: 'ms-rabbitmq', port: 5672, password: 'sgseistgeil', login: 'testmanager', vhost: '/' });
+// var connection = amqp.createConnection({ host: 'ms-rabbitmq', port: 5672, password: 'sgseistgeil', login: 'testmanager', vhost: '/' });
 
-connection.on('error', function (e) {
-    console.log('error', e);
-});
+// connection.on('error', function (e) {
+//     console.log('error', e);
+// });
 
-connection.on('ready', function () {
-    connection.queue('test', function (q) {
-        q.bind('#');
+// // connection.on('ready', function () {
+// //     connection.queue('test', function (q) {
+// //         q.bind('#');
 
-        q.subscribe(function (message) {
-            console.log(message);
-        })
-    })
-});
+// //         q.subscribe(function (message) {
+// //             console.log(message);
+// //         })
+// //     })
+// // });
 MongoClient.connect(url, function (err, db) {
     console.log("socket server is running");
     io.on('connection', (socket) => {
         console.log('connected');
-        connection.on('error', function (e) {
-            socket.emit('CompleteLogin', 1, e)
-        });
-        connection.on('ready', function () {
-            connection.queue('test', function (q) {
-                q.bind('#');
+        // connection.on('error', function (e) {
+        //     socket.emit('CompleteLogin', 1, e)
+        // });
+        // connection.on('ready', function () {
+        //     connection.queue('test', function (q) {
+        //         q.bind('#');
 
-                q.subscribe(function (message) {
-                    connection.on('ready', function () {
-                        connection.queue('test', function (q) {
-                            q.bind('#');
+        //         q.subscribe(function (message) {
+        //             connection.on('ready', function () {
+        //                 connection.queue('test', function (q) {
+        //                     q.bind('#');
 
-                            q.subscribe(function (message) {
-                                socket.emit('CompleteLogin', 1, e)
-                            })
-                        })
-                    });;
-                })
-            })
-        });
+        //                     q.subscribe(function (message) {
+        //                         socket.emit('CompleteLogin', 1, e)
+        //                     })
+        //                 })
+        //             });;
+        //         })
+        //     })
+        // });
         socket.on('Create', function (mission) {
             var x = new Date();
             var y = x.getFullYear().toString();
