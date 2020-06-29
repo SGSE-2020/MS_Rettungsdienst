@@ -162,7 +162,7 @@ MongoClient.connect(url, function (err, db) {
                 medication: mission.medikamente
             }
             socket.emit('registeredHospital', notfallPatient);
-            console.log(notfallPatient);
+            socket.emit('writeConsole', notfallPatient);
             grpcClient2.addPatient({
                 Patient: notfallPatient
             })
