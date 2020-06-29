@@ -137,7 +137,7 @@ MongoClient.connect(url, function (err, db) {
         });
         socket.on('registerHospital', mission => {
             var notfallPatient = {
-                userid: 'testuser',
+                userid: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
                 station: 'Notaufnahme',
                 faculty: '',
                 symptoms: mission.symptome,
