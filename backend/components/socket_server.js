@@ -20,45 +20,62 @@ const grpcClient = caller('ms-buergerbuero:50051', userProtoPath, 'UserService')
 const patientProtoPath = path.resolve(__dirname, '../proto/patient.proto');
 const grpcClient2 = caller('ms-krankenhaus:50051', patientProtoPath, 'Hospital');
 
-// var connection = amqp.createConnection({ host: 'ms-rabbitmq', port: 5672, password: 'sgseistgeil', login: 'testmanager', vhost: '/' });
+//let publishExchange = null;
 
-// connection.on('error', function (e) {
-//     console.log('error', e);
-// });
+// initializePublisher = () => {
+//     const connection = amqp.createConnection({
+//         host: 'ms-rabbitmq',
+//         port: 5672,
+//         login: 'testmanager',
+//         password: 'sgseistgeil',
+//         vhost: '/'
+//     });
 
-// // connection.on('ready', function () {
-// //     connection.queue('test', function (q) {
-// //         q.bind('#');
+//     connection.on('ready', () => {
+//         console.log("AMQP connection established.");
+//         publishExchange = connection.exchange(process.env.MESSAGE_EXCHANGE, {
+//             type: process.env.MESSAGE_EXCHANGE_TYPE,
+//             durable: true,
+//             autoDelete: false
+//         }, (exchangeRes) => {
+//             console.log("AMQP exchange '" + exchangeRes.name + "' established.");
+//         });
 
-// //         q.subscribe(function (message) {
-// //             console.log(message);
-// //         })
-// //     })
-// // });
+//         publishExchange.on('error', error => {
+//             console.error("AMQP Exchange error: " + error.message);
+//         });
+//     });
+
+//     connection.on('error', error => {
+//         socket.emit('writeConsole',"AMQP Connection error: " + error.message);
+//     })
+// };
+
+// exports.publishToExchange = (routingKey, data, socket) => {
+//     if(publishExchange != null){
+//         socket.emit('writeConsole',"AMQP - Start publishing");
+//         publishExchange.publish(routingKey, Buffer.from(JSON.stringify(data)), {
+//             appId: 'Bürgerbüro',
+//             timestamp: new Date().getTime(),
+//             contentType: 'application/json',
+//             type: routingKey
+//         }, () => {
+//             console.log("AMQP - Published message: " + JSON.stringify(data));
+//         });
+
+//         publishExchange.on('error', error => {
+//             socket.emit('writeConsole',"AMQP Exchange error: " + error.message);
+//         });
+//     } else {
+//         socket.emit('writeConsole', "AMQP - Can not publish");
+//     }
+// };
+
 MongoClient.connect(url, function (err, db) {
-    console.log("socket server is running");
+    //socket.emit('writeConsole',"socket server is running");
     io.on('connection', (socket) => {
-        console.log('connected');
-        // connection.on('error', function (e) {
-        //     socket.emit('CompleteLogin', 1, e)
-        // });
-        // connection.on('ready', function () {
-        //     connection.queue('test', function (q) {
-        //         q.bind('#');
-
-        //         q.subscribe(function (message) {
-        //             connection.on('ready', function () {
-        //                 connection.queue('test', function (q) {
-        //                     q.bind('#');
-
-        //                     q.subscribe(function (message) {
-        //                         socket.emit('CompleteLogin', 1, e)
-        //                     })
-        //                 })
-        //             });;
-        //         })
-        //     })
-        // });
+        socket.emit('writeConsole','connected');
+        //initializePublisher();
         socket.on('Create', function (mission) {
             var x = new Date();
             var y = x.getFullYear().toString();
@@ -74,7 +91,7 @@ MongoClient.connect(url, function (err, db) {
             dbo.collection("missionReports").findOne({ einsatzbegin: mission.einsatzbegin }, function (err, result) {
                 if (err) throw err;
                 mission = result;
-                console.log(result)
+                socket.emit('writeConsole',result);
             })
             socket.broadcast.emit('New mission', mission);
             mission._id = null;
@@ -112,10 +129,10 @@ MongoClient.connect(url, function (err, db) {
             socket.emit('End mission', mission);
         });
         socket.on('GetAll', function () {
-            console.log("getAll")
+            socket.emit('writeConsole',"getAll")
             dbo.collection("missionReports").find({}).toArray(function (err, result) {
                 if (err) throw err;
-                console.log(result)
+                socket.emit('writeConsole',result)
                 socket.emit('getAll', result)
             });
         });
@@ -128,11 +145,11 @@ MongoClient.connect(url, function (err, db) {
                         socket.emit('CompleteLogin', 1, result.uid)
                     }
                     else {
-                        socket.emit('CompleteLogin', 1, result)
+                        socket.emit('writeConsole', result)
                     }
                 })
                 .catch(err => {
-                    socket.emit('CompleteLogin', 1, err)
+                    socket.emit('writeConsole', err)
                 })
         });
         socket.on('registerHospital', mission => {
@@ -144,16 +161,17 @@ MongoClient.connect(url, function (err, db) {
                 diagnosis: mission.diagnose,
                 medication: mission.medikamente
             }
+            socket.emit('registeredHospital', notfallPatient);
             console.log(notfallPatient);
             grpcClient2.addPatient({
                 Patient: notfallPatient
             })
-            .then(result => {
-                socket.emit('registeredHospital', result.success)
-            })
-            .catch(err => {
-                socket.emit('registeredHospital', 1, err)
-            })
+                .then(result => {
+                    socket.emit('registeredHospital', result.success)
+                })
+                .catch(err => {
+                    socket.emit('writeConsole', err)
+                })
         })
     });
     var dbo = db.db("ms_rettungsdienst");

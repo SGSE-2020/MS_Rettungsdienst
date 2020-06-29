@@ -118,6 +118,9 @@ export default new Vuex.Store({
     socket_completeLogin: (context, role, token) => {
       console.log(role);
       console.log(token);
+    },
+    socket_writeConsole: (context, data) => {
+      console.log(data);
     }
   },
   modules: {
