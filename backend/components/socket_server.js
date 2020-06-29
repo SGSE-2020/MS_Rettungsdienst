@@ -145,12 +145,14 @@ MongoClient.connect(url, function (err, db) {
                 medication: mission.medikamente
             }
             console.log(notfallPatient);
-            socket.emit('registeredHospital', 'test')
             grpcClient2.addPatient({
                 Patient: notfallPatient
             })
             .then(result => {
                 socket.emit('registeredHospital', result.success)
+            })
+            .catch(err => {
+                socket.emit('registeredHospital', 1, err)
             })
         })
     });
