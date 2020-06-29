@@ -11,13 +11,13 @@ const amqp = require('amqp')
 
 var io = require('socket.io').listen(8080).sockets;
 
-var url = "mongodb://mongo:27017"
+var url = "mongodb://localhost:27017"
 // grpc
 
 const userProtoPath = path.resolve(__dirname, '../proto/user.proto');
 const grpcClient = caller('ms-buergerbuero:50051', userProtoPath, 'UserService');
 
-var connection = amqp.createConnection({ host: '', port: 5672, password: '12345678', login: 'test2', vhost: '/' });
+var connection = amqp.createConnection({ host: 'ms-rabbitmq', port: 5672, password: 'sgseistgeil', login: 'testmanager', vhost: '/' });
 
 connection.on('error', function (e) {
     console.log('error', e);
