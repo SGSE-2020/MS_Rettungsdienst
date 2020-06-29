@@ -11,7 +11,7 @@ const amqp = require('amqp')
 
 var io = require('socket.io').listen(8080).sockets;
 
-var url = "mongodb://localhost:27017"
+var url = "mongodb://mongo:27017"
 // grpc
 
 const userProtoPath = path.resolve(__dirname, '../proto/user.proto');
