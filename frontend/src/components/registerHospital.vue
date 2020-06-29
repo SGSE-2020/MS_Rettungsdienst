@@ -19,6 +19,7 @@ export default {
     sockets: {
         registeredHospital: function(data){
             if (data) {
+                console.log(data);
                 alert("Übergabe an Hospital erfolgreich");
             }
             else {

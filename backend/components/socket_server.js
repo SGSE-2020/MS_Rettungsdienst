@@ -163,7 +163,12 @@ MongoClient.connect(url, function (err, db) {
             }
             socket.emit('writeConsole', notfallPatient);
             grpcClient2.addPatient({
-                Patient: notfallPatient
+                userid: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
+                station: 'Notaufnahme',
+                faculty: '',
+                symtomps: mission.symptome,
+                diagnosis: mission.diagnose,
+                medication: mission.medikamente
             })
                 .then(result => {
                     socket.emit('registeredHospital', result.success)
@@ -172,14 +177,14 @@ MongoClient.connect(url, function (err, db) {
                     socket.emit('writeConsole', err)
                 })
         })
-            // socket.on('deadPatient', mission => {
-            //     socket.emit('writeConsole', "Deadpatient wird ausgeführt");
-            //     data = {
-            //         patientID: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
-            //         Ort: mission.adresse
-            //     }
-            //     publishToExchange('person.verstorben', data, socket)
-            // })
+        // socket.on('deadPatient', mission => {
+        //     socket.emit('writeConsole', "Deadpatient wird ausgeführt");
+        //     data = {
+        //         patientID: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
+        //         Ort: mission.adresse
+        //     }
+        //     publishToExchange('person.verstorben', data, socket)
+        // })
     });
     var dbo = db.db("ms_rettungsdienst");
     const endMissionDB = function (mission) {
