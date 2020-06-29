@@ -34,7 +34,7 @@ initializePublisher = () => {
     connection.on('ready', () => {
         console.log("AMQP connection established.");
         publishExchange = connection.exchange(process.env.MESSAGE_EXCHANGE, {
-            type: process.env.MESSAGE_EXCHANGE_TYPE,
+            type: 'fanout',
             durable: true,
             autoDelete: false
         }, (exchangeRes) => {
