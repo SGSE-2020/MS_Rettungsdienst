@@ -8,8 +8,8 @@ import io from 'socket.io-client';
 import firebase from 'firebase'
 
 Vue.config.productionTip = false
-const socket = io.connect('https://rettungsdienst.dvess.network', {path: "/api/socket.io"});
-//const socket = io.connect('localhost:8080');
+//const socket = io.connect('https://rettungsdienst.dvess.network', {path: "/api/socket.io"});
+const socket = io.connect('localhost:8080');
 
 var config = {
   apiKey: "AIzaSyBvTg0_QrhEvQ9UeZPH8--E2JZ55KA_u_c",

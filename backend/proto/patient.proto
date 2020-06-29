@@ -1,0 +1,20 @@
+syntax = "proto3";
+package patient;
+
+service Hospital {
+  rpc addPatient (Patient) returns (addPatientPeply) {}
+}
+
+message Patient {
+  string userid = 1;
+  string station = 2;
+  string faculty = 3;
+  string symtomps = 4;
+  string diagnosis = 5;
+  string medication = 6;
+
+}
+
+message addPatientPeply {
+  bool success = 1;
+}

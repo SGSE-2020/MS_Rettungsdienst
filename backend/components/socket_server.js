@@ -11,11 +11,14 @@ const amqp = require('amqp')
 
 var io = require('socket.io').listen(8080).sockets;
 
-var url = "mongodb://localhost:27017"
+var url = "mongodb://mongo:27017"
 // grpc
 
 const userProtoPath = path.resolve(__dirname, '../proto/user.proto');
 const grpcClient = caller('ms-buergerbuero:50051', userProtoPath, 'UserService');
+
+const patientProtoPath = path.resolve(__dirname, '../proto/patient.proto');
+const grpcClient2 = caller('ms-krankenhaus:50051', patientProtoPath, 'Hospital');
 
 // var connection = amqp.createConnection({ host: 'ms-rabbitmq', port: 5672, password: 'sgseistgeil', login: 'testmanager', vhost: '/' });
 
@@ -131,9 +134,23 @@ MongoClient.connect(url, function (err, db) {
                 .catch(err => {
                     socket.emit('CompleteLogin', 1, err)
                 })
-
-
         });
+        socket.on('registerHospital', mission => {
+            var notfallPatient = {
+                userid: mission.patientenID,
+                station: 'Notaufnahme',
+                faculty: '',
+                symptoms: mission.symptome,
+                diagnosis: mission.diagnose,
+                medication: mission.medikamente
+            }
+            grpcClient2.addPatient({
+                Patient: notfallPatient
+            })
+            .then(result => {
+                socket.emit('registeredHospital', result.success)
+            })
+        })
     });
     var dbo = db.db("ms_rettungsdienst");
     const endMissionDB = function (mission) {
@@ -150,125 +167,4 @@ MongoClient.connect(url, function (err, db) {
     }
 
 })
-
-//})
-
-
-
-
-// const io = require('socket.io').listen(3000).sockets
-// const MongoClient = require('mongodb').MongoClient
-// const assert = require('assert')
-// var ObjectID = require('mongodb').ObjectID;
-// var grpc = require('grpc');
-// var protoLoader = require('@grpc/proto-loader');
-
-// var PROTO_PATH_BURGERBURO = __dirname + '/../proto/user.proto';
-
-// const url = 'mongodb://mongo@mongo';
-
-
-// var packageDefinition = protoLoader.loadSync(
-//   PROTO_PATH_BURGERBURO,
-//   {
-//     keepCase: true,
-//     longs: String,
-//     enums: String,
-//     defaults: true,
-//     oneofs: true
-//   });
-// var routeguide = grpc.loadPackageDefinition(packageDefinition).user;
-// var clientBurgerburo = new routeguide.UserService('ms-buergerbuero:50051',
-//   grpc.credentials.createInsecure());
-
-// console.log(url)
-// MongoClient.connect(url, function (err, client) {
-//   if (err) {
-//     throw err;
-//   }
-//   //var db = client.db('ms_rettungsdienst')
-//   console.log("Connected succesfully to db");
-//   console.log(db)
-
-//   io.on('connection', function (socket) {
-//     //let collection = db.collection('missionReports');
-//     const createMissionDB = function (mission) {
-//       console.log(mission)
-//       collection.insertOne(mission, function (err, result) {
-//         assert.equal(err, null);
-//       });
-//     }
-
-//     const endMissionDB = function (mission) {
-//       let collection = db.collection('missionReports');
-//       console.log(mission);
-//       collection.updateOne({ _id: new ObjectID(mission._id) }, { $set: { medikamente: mission.medikamente, symptome: mission.symptome, diagnose: mission.diagnose, einsatzende: mission.einsatzende } }, function (err, result) {
-//         assert.equal(err, null);
-//       });
-//     }
-
-//     //io.on('connection', function (socket) {
-//       console.log("connected");
-//       socket.on('Create', function (mission) {
-//         var x = new Date();
-//         var y = x.getFullYear().toString();
-//         var m = (x.getMonth() + 1).toString();
-//         var d = x.getDate().toString();
-//         var h = x.getHours().toString();
-//         var min = x.getMinutes().toString();
-//         (d.length == 1) && (d = '0' + d);
-//         (m.length == 1) && (m = '0' + m);
-//         var yyyymmddhhmin = y + "/" + m + "/" + d + "/" + h + ":" + min;
-//         mission.einsatzbegin = yyyymmddhhmin;
-//         createMissionDB(mission);
-//         socket.broadcast.emit('New mission', mission);
-//         mission._id = null;
-//         mission.patientenID = null;
-//         mission.adresse = null;
-//         mission.einsatzbegin = null;
-//         mission.einsatzende = null;
-//         mission.sanitater = null;
-//         mission.symptome = null;
-//         mission.medikamente = null;
-//         mission.diagnose = null;
-//         socket.emit('New mission', mission);
-//       });
-//       socket.on('End', function (mission) {
-//         var x = new Date();
-//         var y = x.getFullYear().toString();
-//         var m = (x.getMonth() + 1).toString();
-//         var d = x.getDate().toString();
-//         var h = x.getHours().toString();
-//         var min = x.getMinutes().toString();
-//         (d.length == 1) && (d = '0' + d);
-//         (m.length == 1) && (m = '0' + m);
-//         var yyyymmddhhmin = y + "/" + m + "/" + d + "/" + h + ":" + min;
-//         mission.einsatzende = yyyymmddhhmin;
-//         endMissionDB(mission);
-//         mission._id = null;
-//         mission.patientenID = null;
-//         mission.adresse = null;
-//         mission.einsatzbegin = null;
-//         mission.einsatzende = null;
-//         mission.sanitater = null;
-//         mission.symptome = null;
-//         mission.medikamente = null;
-//         mission.diagnose = null;
-//         socket.emit('End mission', mission);
-//       });
-//       socket.on('Login', idtoken => {
-//         clientBurgerburo.verifyUser(idtoken, function (err, feature) {
-//           if (err) {
-//             console.log("error");
-//             socket.emit('CompleteLogin', 1, err)
-//           }
-//           else {
-//             console.log('clompeted')
-//             socket.emit('CompleteLogin', 1, feature)
-//           }
-//         });
-//       })
-//     //});
-//   });
-// })
 

@@ -4,6 +4,7 @@
     <h1> TODO: Hier wird der Einsatzbericht geschrieben</h1>
     <MissionReport/>
     <closeMission/>
+    <registerHospital/>
   </div>
 </template>
 
@@ -11,12 +12,14 @@
 // @ is an alias to /src
 import MissionReport from '@/components/MissionReport.vue'
 import closeMission from '@/components/closeMission.vue'
+import registerHospital from '@/components/registerHospital.vue'
 
 export default {
   name: 'missionOverview',
   components: {
     MissionReport,
-    closeMission
+    closeMission,
+    registerHospital
   }
 }
 </script>
