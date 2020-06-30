@@ -54,6 +54,46 @@ initializePublisher = () => {
     })
 };
 
+initializeConsumer = (socket) => {
+    const connection = amqp.createConnection(connectionObj);
+
+    connection.on('ready', () => {
+        socket.emit('writeConsole',"AMQP connection for consumer established.");
+        connection.exchange('buergerbuero', {
+            type: 'fanout',
+            durable: true,
+            autoDelete: false
+        }, (exchangeRes) => {
+            socket.emit('writeConsole',"AMQP exchange '" + exchangeRes.name + "' established.");
+
+            connection.queue('buergerbuero_nutzerVerstorben', queue => {
+                socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is open.");
+
+                queue.bind('buergerbuero', 'person.verstorben', callback => {
+                    socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is bound to exchange: " + exchangeRes.name + ".");
+                });
+
+                queue.subscribe((msg) => {
+                    socket.emit('writeConsole',"AMQP: Consume message: " + JSON.stringify(msg));
+                    if (msg !== undefined) {
+                        
+                    } else {
+                        console.error("AMQP: Message malformed");
+                    }
+                });
+            });
+        });
+
+        publishExchange.on('error', error => {
+            console.error("AMQP Exchange error: " + error.message);
+        });
+    });
+
+    connection.on('error', error => {
+        console.error("AMQP Connection error: " + error.message);
+    })
+};
+
 publishToExchange = (routingKey, data, socket) => {
     if (publishExchange != null) {
         socket.emit('writeConsole', "AMQP - Start publishing");
@@ -78,6 +118,7 @@ MongoClient.connect(url, function (err, db) {
     io.on('connection', (socket) => {
         socket.emit('writeConsole', 'connected');
         initializePublisher();
+        initializeConsumer(socket);
         socket.on('Create', function (mission) {
             var x = new Date();
             var y = x.getFullYear().toString();
@@ -183,7 +224,7 @@ MongoClient.connect(url, function (err, db) {
         socket.on('deadPatient', mission => {
             socket.emit('writeConsole', "Deadpatient wird ausgeführt");
             data = {
-                patientID: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
+                patientID: 'QOVFnDNw7mhsZyOgnVL1dMMDpd83',
                 Ort: mission.adresse
             }
             publishToExchange('person.verstorben', data, socket)

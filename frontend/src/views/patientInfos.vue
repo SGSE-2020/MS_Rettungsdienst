@@ -1,7 +1,7 @@
 <template>
   <div class="patientInfos">
     <img alt="Vue logo" src="../assets/logo.png">
-    <button @click="getPatient(aktMission)">Einsatz beenden</button>
+    <button @click="getPatient(aktMission)">Patientenakte abfragen</button>
     <div class="krankenList">
       <OnePatient v-for="patient in krankenakte" :krankenakte="patient" :key="patient.datum"/>
     </div>
