@@ -55,7 +55,13 @@ initializePublisher = () => {
 };
 
 initializeConsumer = (socket) => {
-    const connection = amqp.createConnection(connectionObj);
+    const connection = amqp.createConnection({
+        host: 'ms-rabbitmq',
+        port: 5672,
+        login: 'testmanager',
+        password: 'sgseistgeil',
+        vhost: '/'
+    });
 
     connection.on('ready', () => {
         socket.emit('writeConsole',"AMQP connection for consumer established.");
