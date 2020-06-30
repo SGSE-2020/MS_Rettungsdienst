@@ -20,6 +20,9 @@ const grpcClient = caller('ms-buergerbuero:50051', userProtoPath, 'UserService')
 const patientProtoPath = path.resolve(__dirname, '../proto/patient.proto');
 const grpcClient2 = caller('ms-krankenhaus:50051', patientProtoPath, 'Hospital');
 
+const krankenakteProtoPath = path.resolve(__dirname, '../proto/krankenakte.proto');
+const grpcClient3 = caller('ms-hausarzt:50051', krankenakteProtoPath, 'KrankenakteService');
+
 let publishExchange = null;
 
 initializePublisher = () => {
@@ -47,7 +50,7 @@ initializePublisher = () => {
     });
 
     connection.on('error', error => {
-        console.log( "AMQP Connection error: " + error.message);
+        console.log("AMQP Connection error: " + error.message);
     })
 };
 
@@ -176,7 +179,7 @@ MongoClient.connect(url, function (err, db) {
                 .catch(err => {
                     socket.emit('writeConsole', err)
                 })
-        })
+        });
         socket.on('deadPatient', mission => {
             socket.emit('writeConsole', "Deadpatient wird ausgeführt");
             data = {
@@ -184,6 +187,18 @@ MongoClient.connect(url, function (err, db) {
                 Ort: mission.adresse
             }
             publishToExchange('person.verstorben', data, socket)
+        });
+        socket.on('getPatientInfo', patient => {
+            socket.emit('writeConsole', "GetPatient wird ausgeführt");
+            grpcClient3.getKrankenakte({
+                userid: patient
+            })
+                .then(result => {
+                    socket.emit('getPatient', result)
+                })
+                .catch(err => {
+                    socket.emit('writeConsole', err)
+                })
         })
     });
     var dbo = db.db("ms_rettungsdienst");

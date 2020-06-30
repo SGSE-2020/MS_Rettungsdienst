@@ -1,7 +1,7 @@
 <template>
   <div class="PatintInfo">
     <label>PatientenID</label>
-    <input v-model="patID" placeholder="PatientenID" />
+    <input v-model="userid" placeholder="PatientenID" />
     <button @click="getPatInfo" class="getPatInfo">Patientendaten abfragen</button>
     <div>
       <table id="customers">
@@ -50,7 +50,7 @@
             <p>Psychisch Krank:</p>
           </td>
           <td>
-            <p>{{aktPatient.psychisch}}</p>
+            <p>{{aktPatient.psychischkrank}}</p>
           </td>
         </tr>
         <tr>
@@ -71,7 +71,12 @@ import { mapState } from "vuex";
 
 export default {
   name: "patInfo",
-  computed: mapState(["aktPatient"])
+  computed: mapState(["aktPatient"]),
+  methods: {
+    getPatInfo(payload){
+        this.$store.dispatch('emitGetPatientInfo', payload)
+      }
+    }
 };
 </script>
 

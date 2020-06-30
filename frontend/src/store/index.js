@@ -23,14 +23,14 @@ export default new Vuex.Store({
       diagnose: null
     },
     aktPatient: {
-      akteID: "Testakte",
-      patID: "Testpatient",
+      patientenakteid: "Testakte",
+      userid: "Testpatient",
       datum: "33.20.2837",
       anamnese: "vorhanden",
       symptome: "kotzen",
       diagnose: "corona",
       medikation: "nicht vorhanden",
-      psychisch: "nein",
+      psychischkrank: "nein",
       sonstiges: "nicht vorhanden"
     },
     missions: {
@@ -55,6 +55,7 @@ export default new Vuex.Store({
     setUmail:(state, payload) => { state.aktUser.email = payload },
     setUname:(state, payload) => { state.aktUser.name = payload },
     setUrole:(state, payload) => { state.aktUser.role = payload },
+    setPatient:(state, payload) => {state.aktPatient = payload},
   },
   actions: {
     setMissID: (context, payload) => {
@@ -121,6 +122,12 @@ export default new Vuex.Store({
     },
     socket_writeConsole: (context, data) => {
       console.log(data);
+    },
+    emitGetPatientInfo(context){
+      this.__vm.$socket.client.emit('getPatientInfo', context.state.aktPatient.patID)
+    },
+    socket_getPatient(context, patient){
+      context.commit('setPatient', patient)
     }
   },
   modules: {

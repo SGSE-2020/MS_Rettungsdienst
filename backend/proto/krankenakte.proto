@@ -1,0 +1,33 @@
+syntax = "proto3";
+package krankenakte;
+
+service KrankenakteService {
+    rpc getKrankenakte(User) returns (Krankenakte) {}
+    rpc updatePatientenakte(Patientenakte) returns (Status) {}
+}
+
+message Status {
+    string status = 1;
+    string message = 2;
+}
+
+message User {
+    string userid = 1;
+}
+
+message Krankenakte {
+    string userid = 1;
+    repeated Patientenakte patientenakte = 2;
+}
+
+message Patientenakte {
+    string patientenakteid = 1;
+    string userid = 2;
+    string datum = 3;
+    string anamnese = 4;
+    string symptome = 5;
+    string diagnose = 6;
+    string medikation = 7;
+    string psychischkrank = 8;
+    string sonstiges = 9;
+}
