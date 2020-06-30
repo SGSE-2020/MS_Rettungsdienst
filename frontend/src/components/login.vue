@@ -47,10 +47,10 @@ export default {
   methods: {
     loginUser() {
       
-        var email = "exampleuser@test.de";
-        var password = "sgse-ss2020";
-        //var email = this.email
-        //var password = this.password
+        //var email = "exampleuser@test.de";
+        //var password = "sgse-ss2020";
+        var email = this.email
+        var password = this.password
         if(email != undefined && email.length > 0 && password != undefined && password.length > 0){
           
             firebase.auth().signInWithEmailAndPassword(email, password).then( user =>  {
