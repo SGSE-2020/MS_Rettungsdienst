@@ -124,9 +124,10 @@ export default new Vuex.Store({
       console.log(data);
     },
     emitGetPatientInfo(context){
-      this.__vm.$socket.client.emit('getPatientInfo', context.state.aktPatient.patID)
+      this._vm.$socket.client.emit('getPatientInfo', context.state.aktPatient.patID)
     },
     socket_getPatient(context, patient){
+      console.log(patient)
       context.commit('setPatient', patient)
     }
   },
