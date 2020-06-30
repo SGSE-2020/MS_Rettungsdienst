@@ -75,9 +75,9 @@ initializeConsumer = (socket) => {
             connection.queue('buergerbuero_nutzerVerstorben', queue => {
                 socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is open.");
 
-                queue.bind('buergerbuero', 'person.verstorben', callback => {
-                    socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is bound to exchange: " + exchangeRes.name + ".");
-                });
+                // queue.bind('rettungsdienst', 'person.verstorben', callback => {
+                //     socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is bound to exchange: " + exchangeRes.name + ".");
+                // });
 
                 queue.subscribe((msg) => {
                     socket.emit('writeConsole',"AMQP: Consume message: " + JSON.stringify(msg));
@@ -123,8 +123,8 @@ publishToExchange = (routingKey, data, socket) => {
 MongoClient.connect(url, function (err, db) {
     io.on('connection', (socket) => {
         socket.emit('writeConsole', 'connected');
-        initializePublisher();
-        initializeConsumer(socket);
+        //initializePublisher();
+        //initializeConsumer(socket);
         socket.on('Create', function (mission) {
             var x = new Date();
             var y = x.getFullYear().toString();

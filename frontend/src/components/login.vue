@@ -51,6 +51,8 @@ export default {
         //var password = "sgse-ss2020";
         var email = this.email
         var password = this.password
+        console.log(email)
+        console.log(password)
         if(email != undefined && email.length > 0 && password != undefined && password.length > 0){
           
             firebase.auth().signInWithEmailAndPassword(email, password).then( user =>  {
