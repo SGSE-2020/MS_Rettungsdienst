@@ -123,8 +123,8 @@ publishToExchange = (routingKey, data, socket) => {
 MongoClient.connect(url, function (err, db) {
     io.on('connection', (socket) => {
         socket.emit('writeConsole', 'connected');
-        //initializePublisher();
-        //initializeConsumer(socket);
+        initializePublisher();
+        initializeConsumer(socket);
         socket.on('Create', function (mission) {
             var x = new Date();
             var y = x.getFullYear().toString();
