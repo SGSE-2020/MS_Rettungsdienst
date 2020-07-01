@@ -193,9 +193,9 @@ MongoClient.connect(url, function (err, db) {
                     if (result.uid) {
                         socket.emit('writeConsole', result.uid)
                         socket.emit('writeConsole', result)
-                        // dbo.collection("user").findOne({ userid: result.uid }, function (err, res) {
-                        //     socket.emit('CompleteLogin', res.role, res.userid, res.status)
-                        // })
+                        dbo.collection("user").findOne({ userid: result.uid }, function (err, res) {
+                            socket.emit('CompleteLogin', res.role, res.userid, res.status)
+                        })
                     }
                     else {
                         socket.emit('writeConsole', result)
@@ -262,6 +262,7 @@ MongoClient.connect(url, function (err, db) {
                 })
         });
         socket.on('createUser', user => {
+            socket.emit('writeConsole', user)
             dbo.collection("user").insertOne({userid: user.id, role: user.role, status: user.status},function (err, result) {
                 if (err) socket.emit('writeConsole', err)
             })
