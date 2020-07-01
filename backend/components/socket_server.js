@@ -208,7 +208,7 @@ MongoClient.connect(url, function (err, db) {
         socket.on('getAllSanis', function () {
             console.log("ist da")
             socket.emit('writeConsole', "GetAllSanis")
-            dbo.collection("user").find({ status: 1.0, role: 2.0 }).toArray(function (err, result) {
+            dbo.collection("user").find({ status: 1.0, role: "2.0" }).toArray(function (err, result) {
                 if (err) socket.emit('writeConsole', err)
                 socket.emit("AllFreeSanis", result)
             })
