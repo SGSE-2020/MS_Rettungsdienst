@@ -1,6 +1,6 @@
 <template>
   <div class="patientInfos">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <h1>Patientenakte</h1>
     <input v-model="aktMission.patientenID" placeholder="PatientenID" />
     <button @click="getPatient(aktMission.patientenID)">Patientenakte abfragen</button>
     <div class="krankenList">

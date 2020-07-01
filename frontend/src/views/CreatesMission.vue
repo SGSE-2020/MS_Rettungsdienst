@@ -1,7 +1,5 @@
 <template>
   <div class="createMission">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <h1> TODO: Hier wird ein Einsatz erstellt</h1>
     <CreateMission/>
     <IndulgeParamedic/>
   </div>

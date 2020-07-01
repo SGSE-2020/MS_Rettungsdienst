@@ -1,7 +1,6 @@
 <template>
   <div class="missionReport">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <h1> TODO: Hier wird der Einsatzbericht geschrieben</h1>
+    <h1> Einsatzbericht</h1>
     <MissionReport/>
     <closeMission/>
     <registerHospital/>

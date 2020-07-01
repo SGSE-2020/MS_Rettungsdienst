@@ -1,7 +1,6 @@
 <template>
   <div class="registerHospital">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <h1> TODO: Hier wird eine Übersicht über alle vergangenen Einsätze angezeigt</h1>
+    <h1> Vergangene Einsätze</h1>
     <MissionOverview/>
     <div class="missionList">
       <missionInfo v-for="mission in allMissions" :mission="mission" :key="mission._id"/>
