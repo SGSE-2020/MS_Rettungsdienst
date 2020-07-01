@@ -2,7 +2,7 @@
   <div class="patientInfos">
     <h1>Patientenakte</h1>
     <input v-model="aktMission.patientenID" placeholder="PatientenID" />
-    <button @click="getPatient(aktMission.patientenID)">Patientenakte abfragen</button>
+    <button class="btn-create" @click="getPatient(aktMission.patientenID)">Patientenakte abfragen</button>
     <div class="krankenList">
       <OnePatient v-for="patient in krankenakte" :krankenakte="patient" :key="patient.datum"/>
     </div>

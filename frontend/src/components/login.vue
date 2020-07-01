@@ -115,6 +115,7 @@ export default {
       }
     },
     logoutUser() {
+      this.$router.push('/');
       firebase
         .auth()
         .signOut()
