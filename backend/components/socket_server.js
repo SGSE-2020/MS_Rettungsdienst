@@ -192,6 +192,7 @@ MongoClient.connect(url, function (err, db) {
                 .then(result => {
                     if (result.uid) {
                         socket.emit('writeConsole', result.uid)
+                        socket.emit('writeConsole', result)
                         // dbo.collection("user").findOne({ userid: result.uid }, function (err, res) {
                         //     socket.emit('CompleteLogin', res.role, res.userid, res.status)
                         // })
