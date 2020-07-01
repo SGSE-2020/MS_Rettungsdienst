@@ -72,12 +72,12 @@ initializeConsumer = (socket) => {
         }, (exchangeRes) => {
             socket.emit('writeConsole', "AMQP exchange '" + exchangeRes.name + "' established.");
 
-            connection.queue('buergerbuero_nutzerVerstorben', queue => {
+            connection.queue('rettungsdienst', queue => {
                 socket.emit('writeConsole', "AMQP queue '" + queue.name + "' is open.");
 
-                // queue.bind('rettungsdienst', 'person.verstorben', callback => {
-                //     socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is bound to exchange: " + exchangeRes.name + ".");
-                // });
+                queue.bind('buergerbuero', 'person.verstorben', callback => {
+                    socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is bound to exchange: " + exchangeRes.name + ".");
+                });
 
                 queue.subscribe((msg) => {
                     socket.emit('writeConsole', "AMQP: Consume message: " + JSON.stringify(msg));
