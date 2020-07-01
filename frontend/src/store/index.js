@@ -10,6 +10,7 @@ export default new Vuex.Store({
       email: null,
       name:null,
       role: 0,
+      status: null,
     },
     aktMission: {
       _id: null,
@@ -23,7 +24,7 @@ export default new Vuex.Store({
       diagnose: null
     },
     aktPatient: {
-      userid: "Testpatient",
+      userid: null,
     },
     missions: {
       all: []
@@ -47,6 +48,7 @@ export default new Vuex.Store({
     setUmail:(state, payload) => { state.aktUser.email = payload },
     setUname:(state, payload) => { state.aktUser.name = payload },
     setUrole:(state, payload) => { state.aktUser.role = payload },
+    setUstatus:(state, payload) => { state.aktUser.status = payload },
   },
   actions: {
     setMissID: (context, payload) => {
@@ -87,6 +89,9 @@ export default new Vuex.Store({
     },
     setUserRole: (context, payload) => {
       context.commit('setUrole', payload)
+    },
+    setUserStatus: (context, payload) => {
+      context.commit('setUstatus', payload)
     },
     socket_newMission(context, mission) {
       if (context.state.aktUser.uid == mission.sanitater){

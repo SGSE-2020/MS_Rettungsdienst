@@ -64,25 +64,25 @@ initializeConsumer = (socket) => {
     });
 
     connection.on('ready', () => {
-        socket.emit('writeConsole',"AMQP connection for consumer established.");
+        socket.emit('writeConsole', "AMQP connection for consumer established.");
         connection.exchange('buergerbuero', {
             type: 'fanout',
             durable: true,
             autoDelete: false
         }, (exchangeRes) => {
-            socket.emit('writeConsole',"AMQP exchange '" + exchangeRes.name + "' established.");
+            socket.emit('writeConsole', "AMQP exchange '" + exchangeRes.name + "' established.");
 
             connection.queue('buergerbuero_nutzerVerstorben', queue => {
-                socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is open.");
+                socket.emit('writeConsole', "AMQP queue '" + queue.name + "' is open.");
 
                 // queue.bind('rettungsdienst', 'person.verstorben', callback => {
                 //     socket.emit('writeConsole',"AMQP queue '" + queue.name + "' is bound to exchange: " + exchangeRes.name + ".");
                 // });
 
                 queue.subscribe((msg) => {
-                    socket.emit('writeConsole',"AMQP: Consume message: " + JSON.stringify(msg));
+                    socket.emit('writeConsole', "AMQP: Consume message: " + JSON.stringify(msg));
                     if (msg !== undefined) {
-                        
+
                     } else {
                         console.error("AMQP: Message malformed");
                     }
@@ -123,8 +123,8 @@ publishToExchange = (routingKey, data, socket) => {
 MongoClient.connect(url, function (err, db) {
     io.on('connection', (socket) => {
         socket.emit('writeConsole', 'connected');
-        initializePublisher();
-        initializeConsumer(socket);
+        //initializePublisher();
+        //initializeConsumer(socket);
         socket.on('Create', function (mission) {
             var x = new Date();
             var y = x.getFullYear().toString();
@@ -181,7 +181,6 @@ MongoClient.connect(url, function (err, db) {
             socket.emit('writeConsole', "getAll")
             dbo.collection("missionReports").find({}).toArray(function (err, result) {
                 if (err) throw err;
-                socket.emit('writeConsole', result)
                 socket.emit('getAll', result)
             });
         });
@@ -191,7 +190,9 @@ MongoClient.connect(url, function (err, db) {
             })
                 .then(result => {
                     if (result.uid) {
-                        socket.emit('CompleteLogin', 1, result.uid)
+                        dbo.collection("user").findOne({ userid: result.uid }, function (err, res) {
+                            socket.emit('CompleteLogin', res.role, res.userid, res.status)
+                        })
                     }
                     else {
                         socket.emit('writeConsole', result)
@@ -201,10 +202,19 @@ MongoClient.connect(url, function (err, db) {
                     socket.emit('writeConsole', err)
                 })
         });
+        socket.on('getAllSanis', function () {
+            console.log("ist da")
+            socket.emit('writeConsole', "GetAllSanis")
+            dbo.collection("user").find({ status: 1.0, role: 2.0 }).toArray(function (err, result) {
+                if (err) socket.emit('writeConsole', err)
+                socket.emit("AllFreeSanis", result)
+            })
+            console.log("durch")
+        });
 
         socket.on('registerHospital', mission => {
             var notfallPatient = {
-                userid: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
+                userid: mission.patientenID,
                 station: 'Notaufnahme',
                 faculty: '',
                 symtomps: mission.symptome,
@@ -237,6 +247,7 @@ MongoClient.connect(url, function (err, db) {
         });
         socket.on('getPatientInfo', patient => {
             socket.emit('writeConsole', "GetPatient wird ausgeführt");
+            socket.emit('writeConsole', patient)
             grpcClient3.getKrankenakte({
                 userid: patient
             })
@@ -246,6 +257,11 @@ MongoClient.connect(url, function (err, db) {
                 .catch(err => {
                     socket.emit('writeConsole', err)
                 })
+        });
+        socket.on('createUser', user => {
+            dbo.collection("user").insertOne({userid: user.id, role: user.role, status: user.status},function (err, result) {
+                if (err) socket.emit('writeConsole', err)
+            })
         })
     });
     var dbo = db.db("ms_rettungsdienst");

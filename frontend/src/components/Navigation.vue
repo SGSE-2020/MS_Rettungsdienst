@@ -1,25 +1,29 @@
 <template>
-    <div class="navigation">
-        <div type="button" class="missionReportNav">
-            <button id="misRepNav" @click="$router.push('missionReport')" class="NavBut" v-if="aktUser.role==0">
-              <img src="../assets/missionReportLogo.png">
-            </button>
-            <button id="misRepNav" @click="$router.push('registerHospital')" class="NavBut" v-if="aktUser.role==0">
-              <img src="../assets/hospitalLogo.jpg">
-            </button>
-            <button id="misRepNav" @click="$router.push('showWay')" class="NavBut" v-if="aktUser.role==0">
-              <img src="../assets/wayLogo.png">
-            </button>
-            <button id="patInfoNav" @click="$router.push('patientInfos')" class="NavBut" v-if="aktUser.role==0">
-              <img src="../assets/patientinfosLogo.png">
-            </button>
-            <button id="misRepNav" @click="$router.push('missionOverview')" class="NavBut" >
-              <img src="../assets/writingReport.png">
-            </button>
-            <button id="misRepNav" @click="$router.push('createMission')" class="NavBut" >
-              <img src="../assets/writingReport.png">
-            </button>
-        </div>
+  <div class="navigation">
+    <div type="button" class="missionReportNav">
+      <div id="buttonnav">
+          <img src="../assets/missionReportLogo.png" @click="$router.push('missionReport')"/>
+
+      </div>
+      <div id="buttonnav">
+          <img src="../assets/hospitalLogo.jpg" @click="$router.push('missionReport')" />
+      </div>
+      <div id="buttonnav">
+          <img src="../assets/wayLogo.png" @click="$router.push('showWay')"/>
+      </div>
+      <div id="buttonnav">
+          <img src="../assets/patientinfosLogo.png" @click="$router.push('patientInfos')"/>
+      </div>
+      <div id="buttonnav">
+          <img src="../assets/writingReport.png" @click="$router.push('missionOverview')"/>
+      </div>
+      <div id="buttonnav">
+          <img src="../assets/writingReport.png" @click="$router.push('createMission')" />
+      </div>
+      <div id="buttonnav">
+          <img src="../assets/writingReport.png" @click="$router.push('admin')"/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,14 +32,13 @@ import { mapState } from "vuex";
 
 export default {
   name: "test",
-  computed: mapState(["aktUser"]),
+  computed: mapState(["aktUser"])
 };
 </script>
 
 <style scoped>
-  .NavBut {
-    background-color: black;
-    width: 20%;
-    height: 300px;
-  }
+.NavBut {
+  width: 20%;
+  height: 300px;
+}
 </style>

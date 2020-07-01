@@ -1,7 +1,7 @@
 <template>
   <div class="PatintInfo">
     <label>PatientenID</label>
-    <input v-model="userid" placeholder="PatientenID" />
+    <input v-model="aktPatient.userid" placeholder="PatientenID" />
     <button @click="getPatInfo" class="getPatInfo">Patientendaten abfragen</button>
     <div>
       <table id="customers">
