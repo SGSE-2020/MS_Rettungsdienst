@@ -185,6 +185,7 @@ MongoClient.connect(url, function (err, db) {
             });
         });
         socket.on('Login', idtoken => {
+            socket.emit('writeConsole', idtoken)
             grpcClient.verifyUser({
                 token: idtoken
             })
