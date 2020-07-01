@@ -1,6 +1,6 @@
 <template>
   <div class="closeMission">
-    <button @click="closedMission(aktMission)">Einsatz beenden</button>
+    <button class="btn-create" @click="closedMission(aktMission)">Einsatz beenden</button>
   </div>
 </template>
 

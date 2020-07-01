@@ -1,11 +1,11 @@
 <template>
     <div class="mission">
         <div class="always">
-            <label id="infosCaption"> Einsatzstart: </label> <label id="infos"> {{mission.einsatzbegin}}</label>
-            <br v-if="mission.einsatzende"/>
-            <label id="infosCaption" v-if="mission.einsatzende != undefined"> Einsatzende: </label> <label id="infos"> {{mission.einsatzende}}</label>
-            <br/>
-            <label id="infosCaption"> Einsatzort: </label> <label id="infos"> {{mission.adresse}}</label>
+            <label id="infosCaption" v-if="mission.einsatzende != undefined"> Einsatzstart: </label> <label id="infos" v-if="mission.einsatzende != undefined"> {{mission.einsatzbegin}}</label>
+            <br id="zwischen" v-if="mission.einsatzende"/>
+            <label id="infosCaption" v-if="mission.einsatzende != undefined"> Einsatzende: </label> <label id="infos" v-if="mission.einsatzende != undefined"> {{mission.einsatzende}}</label>
+            <br v-if="mission.einsatzende != undefined" />
+            <label id="infosCaption" v-if="mission.einsatzende != undefined"> Einsatzort: </label> <label v-if="mission.einsatzende != undefined" id="infos"> {{mission.adresse}}</label>
         </div>
     </div>
 </template>
@@ -20,20 +20,17 @@ export default {
 
 <style scoped>
 .always {
-    background-color: green;
-    margin-bottom: 10%;
-    margin-left: 20%;
-    margin-right: 20%;
-    border-color: hotpink;
-    border: 5px;
+    background-color: #009900;
+    margin-bottom: 10pt;
 }
 #infosCaption {
     color: honeydew;
     margin-right: 20%;
+    float: left;
+    margin-left: 15pt;
 }
-
 #infos {
     color: honeydew;
-
+    margin-left: 5pt;
 }
 </style>

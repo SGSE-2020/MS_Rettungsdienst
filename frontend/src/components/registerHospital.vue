@@ -1,6 +1,6 @@
 <template>
   <div class="registerHospital">
-    <button @click="register(aktMission)">Weitergabe an Krankenhaus</button>
+    <button class="btn-create" @click="register(aktMission)">Weitergabe an Krankenhaus</button>
   </div>
 </template>
 

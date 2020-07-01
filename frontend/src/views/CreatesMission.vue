@@ -1,6 +1,8 @@
 <template>
   <div class="createMission">
+    <h1 class="Überschrift2"> Einsatz erstellen</h1>
     <CreateMission/>
+    <h2> Verfügbare Sanitäter</h2>
     <IndulgeParamedic/>
   </div>
 </template>
@@ -18,3 +20,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div class="deadPerson">
-    <button @click="dead(aktMission)">Person für tot erklären</button>
+    <button class="btn-create" @click="dead(aktMission)">Person für tot erklären</button>
   </div>
 </template>
 

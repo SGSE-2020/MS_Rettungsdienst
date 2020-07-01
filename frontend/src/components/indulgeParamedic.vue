@@ -5,7 +5,7 @@
       <label>{{para.userid}}</label>
     </div>
     <div class="startMission">
-      <button @click="createMission(indPara)">Einsatz erstellen</button>
+      <button class="btn-create" @click="createMission(indPara)">Einsatz erstellen</button>
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   name: "test",
   data: function() {
     return {
-      allSanis: [],
+      allSanis: []
     };
   },
   computed: mapState(["paramedics", "aktMission"]),
@@ -26,15 +26,31 @@ export default {
       this.$store.dispatch("emitCreateMission", sanitater);
     }
   },
-  mounted: function(){
+  mounted: function() {
     console.log("Created");
-    this.$socket.client.emit('getAllSanis');
+    this.$socket.client.emit("getAllSanis");
   },
   sockets: {
-    AllFreeSanis: function(data){
-      console.log(data)
+    AllFreeSanis: function(data) {
+      console.log(data);
       this.allSanis = data;
     }
-  },
+  }
 };
 </script>
+
+<style>
+#paramedicList {
+  margin-bottom: 20pt;
+}
+
+.btn-create {
+  background-color: #009900; 
+  color: #ffffff; 
+  border: none; 
+  padding: 10px; 
+  text-align: center; 
+  font-size: 16px; 
+  margin: 5pt;
+}
+</style>

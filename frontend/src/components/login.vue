@@ -1,30 +1,27 @@
 <template>
-  <nav id="rettungsdienst_nav" class="header level">
+  <div class="header">
     <div class="level-left">
-      <a href="/">
-        <img class="header-logo" src="../assets/logo.png" alt="Smart City - Rettungsdienst Logo" />
-      </a>
-      <div class="login">
-        <div v-if="!user">
-          <form class="right">
-            <input type="email" placeholder="E-Mail" v-model="email" />
-            <input type="password" placeholder="Passwort" v-model="password" />
-            <input type="submit" @click.prevent="loginUser()" value="Login" />
-          </form>
-        </div>
-        <div v-if="user">
-          <p class="welcome-message column">Willkommen, {{aktUser.name}}</p>
-          <button class="button-column button-green-bg" @click.prevent="logoutUser()">Logout</button>
-        </div>
+      <span class="left">
+          <img class="header-logo" src="../assets/logo.jpg" alt="Smart City - Rettungsdienst Logo" @click="$router.push('/')"/>
+      </span>
+    </div>
+    <div class="login">
+      <div v-if="!user">
+        <form class="right">
+          <input type="email" placeholder="E-Mail" v-model="email" />
+          <input type="password" placeholder="Passwort" v-model="password" />
+          <input type="submit" @click.prevent="loginUser()" value="Login" />
+        </form>
+      </div>
+      <div v-if="user">
+        <p class="welcome-message column">Willkommen, {{aktUser.name}}</p>
+        <button class="button-column button-green-bg" @click.prevent="logoutUser()">Logout</button>
       </div>
     </div>
-    <div class="toggle">
-      <select name="top5" size="1" v-model="aktUser.status">
-        <option value="1.0">verfügbar</option>
-        <option value="2.0">nicht verfügbar</option>
-      </select>
+    <div class="Überschrift">
+      <h1> Rettungsdienst</h1>
     </div>
-  </nav>
+  </div>
 </template>
 
 <script>
@@ -146,16 +143,33 @@ export default {
 </script>
 
 <style>
-.level-left {
-  background-color: fff;
-  width: 25%;
-}
-.header-logo {
-  left: 0;
+.header {
+  background-color: #009900;
+  height: 100pt;
   width: 100%;
 }
+.left {
+  float: left;
+}
+
+.header-logo{
+  width: 40%;
+  height: auto;
+  margin: 7pt;
+}
+
 .login{
-  right: 0;
+  float:right;
+  margin: 10pt;
+}
+
+.welcome-message{
+  color: aliceblue;
+}
+
+.Überschrift{
+  color: aliceblue;
+  font-size: larger;
 }
 </style>
 

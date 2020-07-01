@@ -5,9 +5,9 @@
           <img src="../assets/missionReportLogo.png" @click="$router.push('missionReport')" v-if="aktUser.role == '2.0'"/>
 
       </div>
-      <div id="buttonnav">
-          <img src="../assets/hospitalLogo.jpg" @click="$router.push('missionReport')" v-if="aktUser.role == '2.0'"/>
-      </div>
+      <!-- <div id="buttonnav">
+          <img src="../assets/hospitalLogo.png" @click="$router.push('missionReport')" v-if="aktUser.role == '2.0'"/>
+      </div> -->
       <!-- <div id="buttonnav">
           <img src="../assets/wayLogo.png" @click="$router.push('showWay')" v-if="aktUser.role == '2.0'"/>
       </div> -->
@@ -15,10 +15,10 @@
           <img src="../assets/patientinfosLogo.png" @click="$router.push('patientInfos')" v-if="aktUser.role == '2.0'"/>
       </div>
       <div id="buttonnav">
-          <img src="../assets/writingReport.png" @click="$router.push('missionOverview')"/>
+          <img src="../assets/einsatzhistorie.png" @click="$router.push('missionOverview')"/>
       </div>
       <div id="buttonnav">
-          <img src="../assets/writingReport.png" @click="$router.push('createMission')" v-if="aktUser.role == '1.0'"/>
+          <img src="../assets/leitstelle.png" @click="$router.push('createMission')" v-if="aktUser.role == '1.0'"/>
       </div>
       <div id="buttonnav">
           <img src="../assets/writingReport.png" @click="$router.push('admin')"/>
@@ -40,5 +40,9 @@ export default {
 .NavBut {
   width: 20%;
   height: 300px;
+}
+
+#buttonnav{
+  margin: 15pt;
 }
 </style>

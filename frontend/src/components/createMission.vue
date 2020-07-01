@@ -9,7 +9,6 @@
           <td>
             <label>{{aktMission.patientenID}}</label>
           </td>
-          <td></td>
         </tr>
         <tr>
         <td>
@@ -17,10 +16,9 @@
         </td>
         <td>
           <label>
-              <textarea v-model="aktMission.adresse" placeholder="add multiple lines"></textarea>
+              <textarea id="text" v-model="aktMission.adresse" placeholder="add multiple lines"></textarea>
             </label>
         </td>
-        <td></td>
       </tr>
       <tr>
         <tr>
@@ -29,10 +27,9 @@
           </td>
           <td>
             <label>
-              <textarea v-model="aktMission.symptome" placeholder="add multiple lines"></textarea>
+              <textarea id="text" v-model="aktMission.symptome" placeholder="add multiple lines"></textarea>
             </label>
           </td>
-          <td></td>
         </tr>
       </table>
     </div>
@@ -62,8 +59,14 @@ export default {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4caf50;
+  background-color: #009900;
   color: white;
-  width: 50%;
+  width: 10%;
+}
+
+#text {
+  width: 95%;
+  resize: none;
+  margin-left: 10pt;
 }
 </style>

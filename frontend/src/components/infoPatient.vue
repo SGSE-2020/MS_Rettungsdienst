@@ -87,7 +87,7 @@ export default {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4caf50;
+  background-color: #009900;
   color: white;
 }
 </style>

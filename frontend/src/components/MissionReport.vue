@@ -1,7 +1,5 @@
 <template>
   <div class="MissionReport">
-    <button @click="setMisID({'value':'7463363537'})" />
-    <hr />
     <table id="customers">
       <tr>
         <td>
@@ -63,7 +61,7 @@
         </td>
         <td>
           <label>
-            <textarea v-model="aktMission.symptome" placeholder="add multiple lines"></textarea>
+            <textarea id="text" v-model="aktMission.symptome" placeholder="add multiple lines"></textarea>
           </label>
         </td>
         <td></td>
@@ -73,7 +71,7 @@
           <label>Medikamente:</label>
         </td>
         <td>
-          <textarea v-model="aktMission.medikamente" placeholder="add multiple lines"></textarea>
+          <textarea id="text" v-model="aktMission.medikamente" placeholder="add multiple lines"></textarea>
         </td>
         <td></td>
       </tr>
@@ -82,7 +80,7 @@
           <label>Vorläufige Diagnose:</label>
         </td>
         <td>
-          <textarea v-model="aktMission.diagnose" placeholder="add multiple lines"></textarea>
+          <textarea id="text" v-model="aktMission.diagnose" placeholder="add multiple lines"></textarea>
         </td>
         <td></td>
       </tr>
@@ -114,8 +112,14 @@ export default {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4caf50;
+  background-color: green;
   color: white;
   width: 50%;
+}
+
+#text {
+  width: 95%;
+  resize: none;
+  margin-left: 10pt;
 }
 </style>
