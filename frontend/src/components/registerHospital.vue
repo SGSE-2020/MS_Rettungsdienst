@@ -14,6 +14,7 @@ export default {
   methods: {
     register(payload){
         this.$socket.client.emit('registerHospital', payload)
+        this.$store.dispatch('emitEndMission', payload)
       }
     },
     sockets: {
@@ -29,3 +30,15 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.btn-create {
+  background-color: #009900; 
+  color: #ffffff; 
+  border: none; 
+  padding: 10px; 
+  text-align: center; 
+  font-size: 16px; 
+  margin: 5pt;
+}
+</style>

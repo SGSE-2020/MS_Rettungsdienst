@@ -2,7 +2,12 @@
   <div class="header">
     <div class="level-left">
       <span class="left">
-          <img class="header-logo" src="../assets/logo.jpg" alt="Smart City - Rettungsdienst Logo" @click="$router.push('/')"/>
+        <img
+          class="header-logo"
+          src="../assets/logo.jpg"
+          alt="Smart City - Rettungsdienst Logo"
+          @click="$router.push('/')"
+        />
       </span>
     </div>
     <div class="login">
@@ -19,7 +24,7 @@
       </div>
     </div>
     <div class="Überschrift">
-      <h1> Rettungsdienst</h1>
+      <h1>Rettungsdienst</h1>
     </div>
   </div>
 </template>
@@ -115,17 +120,19 @@ export default {
       }
     },
     logoutUser() {
-      this.$router.push('/');
+      this.$router.push("/");
       firebase
         .auth()
         .signOut()
         .then(
-          function() {
-            //Logout erfolgreich
-          },
+          function() {},
           function() {
             alert("Logout fehlgeschlagen");
-          }
+          },
+          console.log("logout"),
+          this.$store.dispatch("setUserRole", 0),
+          this.$store.dispatch("setUserId", ""),
+          this.$store.dispatch("setUserStatus", "0.0")
         );
     },
     changeStatus(payload) {
@@ -153,22 +160,22 @@ export default {
   float: left;
 }
 
-.header-logo{
+.header-logo {
   width: 40%;
   height: auto;
   margin: 7pt;
 }
 
-.login{
-  float:right;
+.login {
+  float: right;
   margin: 10pt;
 }
 
-.welcome-message{
+.welcome-message {
   color: aliceblue;
 }
 
-.Überschrift{
+.Überschrift {
   color: aliceblue;
   font-size: larger;
 }

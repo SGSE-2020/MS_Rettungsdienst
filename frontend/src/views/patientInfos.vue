@@ -6,6 +6,9 @@
     <div class="krankenList">
       <OnePatient v-for="patient in krankenakte" :krankenakte="patient" :key="patient.datum"/>
     </div>
+    <div class="Naviga">
+    <button class="btn-create" @click="$router.push('missionReport')">Zum Einsatzbericht</button>
+    </div>
   </div>
 </template>
 
@@ -39,3 +42,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.btn-create {
+  background-color: #009900; 
+  color: #ffffff; 
+  border: none; 
+  padding: 10px; 
+  text-align: center; 
+  font-size: 16px; 
+  margin: 5pt;
+}
+</style>

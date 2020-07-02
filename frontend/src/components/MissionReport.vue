@@ -15,7 +15,8 @@
           <label>PatientenID:</label>
         </td>
         <td>
-          <label>{{aktMission.patientenID}}</label>
+          <label v-if="aktMission.patientenID != null">{{aktMission.patientenID}}</label>
+          <button v-if="aktMission.patientenID == null" @click="$router.push('patientInfos')">Krankenakte abfragen</button>
         </td>
         <td></td>
       </tr>
@@ -94,8 +95,7 @@ import { mapState } from "vuex";
 export default {
   name: "test",
   computed: mapState(["aktMission"]),
-  methods: {
-  }
+  methods: {}
 };
 </script>
 
