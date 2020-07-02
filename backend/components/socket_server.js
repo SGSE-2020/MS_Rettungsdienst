@@ -219,17 +219,8 @@ MongoClient.connect(url, function (err, db) {
         });
 
         socket.on('registerHospital', mission => {
-            var notfallPatient = {
-                userid: mission.patientenID,
-                station: 'Notaufnahme',
-                faculty: '',
-                symtomps: mission.symptome,
-                diagnosis: mission.diagnose,
-                medication: mission.medikamente
-            }
-            socket.emit('writeConsole', notfallPatient);
             grpcClient2.addPatient({
-                userid: '6TbzcPavrSNdq1W1qAKqyfhhvxB2',
+                userid: mission.patientenID,
                 station: 'Notaufnahme',
                 faculty: '',
                 symtomps: mission.symptome,
@@ -246,7 +237,7 @@ MongoClient.connect(url, function (err, db) {
         socket.on('deadPatient', mission => {
             socket.emit('writeConsole', "Deadpatient wird ausgeführt");
             data = {
-                patientID: 'QOVFnDNw7mhsZyOgnVL1dMMDpd83',
+                patientID: mission.patientenID,
                 Ort: mission.adresse
             }
             publishToExchange('person.verstorben', data, socket)

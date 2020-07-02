@@ -30,20 +30,17 @@ export default {
 
 <style scoped>
 .always {
-    background-color: green;
-    margin-bottom: 10%;
-    margin-left: 20%;
-    margin-right: 20%;
-    border-color: hotpink;
-    border: 5px;
+    background-color: #009900;
+    margin-bottom: 10pt;
 }
 #infosCaption {
     color: honeydew;
     margin-right: 20%;
+    float: left;
+    margin-left: 15pt;
 }
-
 #infos {
     color: honeydew;
-
+    margin-left: 5pt;
 }
 </style>
